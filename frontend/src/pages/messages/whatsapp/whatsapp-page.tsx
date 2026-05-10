@@ -224,6 +224,40 @@ export function WhatsAppMessagesPage() {
     [selectedId],
   );
 
+  const handleToggleAi = useCallback(
+    async (enabled: boolean) => {
+      if (!selectedId) return;
+      try {
+        const updated = await whatsappChatApi.toggleAi(selectedId, enabled);
+        setConversations((prev) =>
+          prev.map((c) => (c.id === updated.id ? updated : c)),
+        );
+      } catch (e) {
+        setSendError(
+          e instanceof ApiError ? e.message : 'AI açılıp/kapatılamadı.',
+        );
+      }
+    },
+    [selectedId],
+  );
+
+  const handleDelete = useCallback(async () => {
+    if (!selectedId) return;
+    if (!window.confirm('Bu sohbet ve tüm mesajları silinecek. Emin misiniz?')) {
+      return;
+    }
+    try {
+      await whatsappChatApi.delete(selectedId);
+      setConversations((prev) => prev.filter((c) => c.id !== selectedId));
+      setMessages([]);
+      setSelectedId(null);
+    } catch (e) {
+      setSendError(
+        e instanceof ApiError ? e.message : 'Sohbet silinemedi.',
+      );
+    }
+  }, [selectedId]);
+
   const handleNewChatCreated = useCallback(
     (conv: WhatsAppConversation) => {
       setConversations((prev) => {
@@ -288,7 +322,7 @@ export function WhatsAppMessagesPage() {
         unreadTotal={unreadTotal}
       />
 
-      <div className="flex grow min-w-0 flex-col">
+      <div className="flex grow min-w-0 min-h-0 flex-col">
         {conversationsError && (
           <div className="border-b border-destructive/30 bg-destructive/5 text-destructive text-xs px-4 py-2 flex items-start gap-2">
             <AlertCircle className="size-3.5 mt-0.5 shrink-0" />
@@ -319,6 +353,8 @@ export function WhatsAppMessagesPage() {
           sendError={sendError}
           onSend={handleSend}
           onChangeStatus={handleChangeStatus}
+          onToggleAi={handleToggleAi}
+          onDelete={handleDelete}
         />
       </div>
 

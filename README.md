@@ -1,166 +1,229 @@
-# YZTA Hackathon Project
+# KobAI — KOBİ / Kooperatif AI Asistanı
 
-KOBİler için yapay zeka destekli operasyon yönetim platformu.
+Organik gıda kooperatifi için WhatsApp üzerinden müşteri iletişimi, sipariş takibi, stok yönetimi ve AI destekli otomatik yanıt sistemi.
 
-> FastAPI + React 19 + PostgreSQL + MinIO. Tamamen Docker Compose ile ayağa kalkar.
+**Demo:** https://kobaitec.com.tr  
+**Sektör:** Organik Gıda — Anadolu Doğal Kooperatifi
 
-## İçindekiler
+---
 
-- [Stack](#stack)
-- [Proje Yapısı](#proje-yapısı)
-- [Hızlı Başlangıç](#hızlı-başlangıç)
-- [Servisler](#servisler)
-- [API Özeti](#api-özeti)
-- [Geliştirme Notları](#geliştirme-notları)
-- [Dikkat Edilecek Hususlar](#dikkat-edilecek-hususlar)
+## Özellikler
 
-## Stack
+### 🤖 WhatsApp AI Agent
+- **LangGraph** tabanlı multi-agent supervisor pattern
+- 5 agent: Supervisor (yönlendirici), Karşılama, Ürün Bilgi, Sipariş, Devir
+- Tool-calling ile DB'den gerçek zamanlı veri çekme (ürün arama, sipariş durumu, kargo takip)
+- Prompt'lar panelden düzenlenebilir (Panel Ayarları → WhatsApp AI Agentları)
+- Sohbet bazında AI açma/kapama toggle'ı
+- Escalation: AI çözemezse otomatik canlı temsilciye devir
 
-| Katman          | Teknoloji                                               |
-|-----------------|---------------------------------------------------------|
-| Backend         | Python 3.12, FastAPI, SQLAlchemy 2.0 (async), Alembic   |
-| Auth            | JWT (access + refresh), bcrypt, jti blocklist           |
-| Frontend        | React 19, Vite, TypeScript, TailwindCSS, react-query    |
-| Veritabanı      | PostgreSQL 16                                           |
-| Obje deposu     | MinIO (S3 uyumlu, presigned POST policy ile yükleme)    |
-| Containerization| Docker / Docker Compose                                 |
+### 💬 WhatsApp Business Entegrasyonu
+- Meta Cloud API ile tam entegrasyon
+- Webhook ile gerçek zamanlı inbound mesaj alma
+- Outbound mesaj gönderme (panel + AI)
+- Otomatik WABA webhook subscription
+- Mesaj durumu takibi (sent → delivered → read)
+
+### 📦 Ürün & Stok Yönetimi
+- 20 ürünlük organik gıda kataloğu (bal, pekmez, kuruyemiş, peynir, yağ, çay)
+- Stok hareketleri (giriş/çıkış/düzeltme)
+- Düşük stok uyarıları (eşik bazlı)
+- Ürün arama ve filtreleme
+
+### 🛒 Sipariş Yönetimi
+- Sipariş oluşturma (otomatik numara üretimi, stok düşme)
+- Durum takibi: pending → confirmed → preparing → shipped → delivered
+- Sipariş bazında kargo bağlantısı
+
+### 🚚 Kargo Takibi
+- Türk kargo firmaları: Aras, Yurtiçi, MNG, PTT
+- Takip numarası ve durum yönetimi
+- Gecikme tespiti (otomatik delayed işaretleme)
+
+### ✅ Görev Yönetimi
+- Paketleme, kargolama, stok yenileme, genel görevler
+- Öncelik ve atama sistemi
+- Sipariş bağlantılı görevler
+
+### 🔔 Bildirim Sistemi
+- Düşük stok, yeni sipariş, kargo gecikmesi, görev atama
+- Önem seviyesi: info, warning, critical
+- Kullanıcı bazlı + broadcast bildirimler
+
+---
+
+## Teknoloji
+
+| Katman | Teknoloji |
+|--------|-----------|
+| Backend | Python 3.12, FastAPI, SQLAlchemy 2.0, Alembic |
+| AI | LangChain, LangGraph, Google Gemini |
+| Frontend | React 19, TypeScript, TanStack Table, Tailwind CSS |
+| Database | PostgreSQL 16 |
+| Storage | MinIO (S3-uyumlu) |
+| Messaging | WhatsApp Cloud API (Meta) |
+| Infra | Docker Compose, Nginx, Cloudflare Tunnel |
+
+---
+
+## Kurulum
+
+```bash
+# 1. Repo'yu klonla
+git clone <repo-url>
+cd YZTA-Hackathon-Project
+
+# 2. .env dosyasını düzenle
+cp .env.example .env
+# DATABASE_URL, SECRET_KEY, MINIO ayarlarını doldur
+
+# 3. Docker ile başlat
+docker compose up -d
+
+# Otomatik olarak:
+# - PostgreSQL başlar
+# - Migration çalışır (8 migration)
+# - Seed data yüklenir (12 müşteri, 20 ürün, 12 sipariş, 11 kargo, 10 görev, 10 bildirim)
+# - Backend + Frontend + Nginx ayağa kalkar
+```
+
+### Varsayılan Kullanıcılar (Seed)
+
+| Kullanıcı | Şifre | Rol |
+|-----------|-------|-----|
+| admin | Admin123! | Yönetici |
+| depo-ali | Depo123! | Depo Görevlisi |
+| kargo-ayse | Kargo123! | Kargo Sorumlusu |
+| satis-fatma | Satis123! | Satış |
+| muhasebe-hasan | Muhasebe123! | Muhasebe |
+
+
+## API Endpoints
+
+| Grup | Endpoint | Açıklama |
+|------|----------|----------|
+| Auth | POST /api/v1/auth/login | JWT login |
+| Users | GET /api/v1/users | Kullanıcı listesi |
+| Customers | GET/POST /api/v1/customers | Müşteri CRUD |
+| Products | GET/POST /api/v1/products | Ürün CRUD |
+| Products | GET /api/v1/products/low-stock | Düşük stok |
+| Products | POST /api/v1/products/{id}/stock-movements | Stok hareketi |
+| Orders | GET/POST /api/v1/orders | Sipariş CRUD |
+| Shipments | GET/POST /api/v1/shipments | Kargo CRUD |
+| Tasks | GET/POST /api/v1/tasks | Görev CRUD |
+| Notifications | GET/POST /api/v1/notifications | Bildirim |
+| WhatsApp | GET/POST /api/v1/integrations/whatsapp | WA hesap yönetimi |
+| WhatsApp Chat | GET /api/v1/whatsapp/chat/conversations | Sohbet listesi |
+| WhatsApp Chat | PATCH .../ai-toggle | AI aç/kapat |
+| WhatsApp Chat | DELETE .../conversations/{id} | Sohbet sil |
+| AI Agents | GET /api/v1/integrations/ai/agents | Agent listesi |
+| AI Agents | PATCH .../agents/{key} | Prompt güncelle |
+
+---
 
 ## Proje Yapısı
 
 ```
-.
-├── backend/
-│   ├── alembic/              Migration'lar
-│   └── app/
-│       ├── api/              Endpointler (auth, users, uploads)
-│       ├── core/             Config, security, rate_limit, middleware
-│       ├── db/               Session ve init (alembic upgrade + seed)
-│       ├── models/           ORM modelleri (user, token_blocklist)
-│       ├── schemas/          Pydantic şemaları + presenter
-│       └── services/         İş mantığı (user, token, storage)
-├── frontend/
-│   └── src/
-│       ├── auth/             Auth provider, login/logout, adapters
-│       ├── components/       UI bileşenleri
-│       ├── i18n/             TR / EN çeviriler
-│       ├── layouts/          Sayfa layoutları
-│       ├── lib/              API client, helpers
-│       ├── pages/            Sayfalar (kobai/, account/, ...)
-│       └── routing/          Route tanımları
-├── docker-compose.yml
-└── .env.example
+backend/
+├── app/
+│   ├── agents/          # LangGraph AI agent'ları
+│   │   ├── definitions.py   # Agent tanımları + default prompt'lar
+│   │   ├── graph.py         # Supervisor + worker graph
+│   │   └── tools.py         # DB tool'ları (search, order status, etc.)
+│   ├── api/v1/endpoints/    # FastAPI route'ları
+│   ├── db/
+│   │   ├── seed_data.json   # Demo verisi
+│   │   ├── seeder.py        # Seed runner
+│   │   └── bootstrap.py     # Migration + seed (entrypoint)
+│   ├── models/              # SQLAlchemy modelleri
+│   ├── schemas/             # Pydantic şemaları
+│   └── services/            # İş mantığı
+├── alembic/versions/        # 8 migration dosyası
+├── scripts/entrypoint.sh    # Docker entrypoint
+└── requirements.txt
+
+frontend/
+├── src/
+│   ├── pages/kobai/         # Ana uygulama sayfaları
+│   │   ├── customers/       # Müşteri listesi
+│   │   ├── products/        # Ürün listesi
+│   │   ├── orders/          # Sipariş listesi
+│   │   ├── shipments/       # Kargo listesi
+│   │   ├── tasks/           # Görev listesi
+│   │   ├── notifications/   # Bildirim listesi
+│   │   ├── inventory/       # Stok hareketleri + düşük stok
+│   │   └── settings/        # Ayarlar (agents, users, integrations)
+│   ├── pages/messages/whatsapp/  # WhatsApp sohbet paneli
+│   ├── config/menu.config.tsx    # Sidebar menü
+│   └── i18n/messages/tr.json    # Türkçe çeviriler
+└── Dockerfile
 ```
 
-## Hızlı Başlangıç
+---
 
-Gereksinimler: **Docker**, **Docker Compose**, **Git**.
+## AI Agent Mimarisi
 
-```bash
-# 1) Repoyu klonla
-git clone https://github.com/<kullanici>/YZTA-Hackathon-Project.git
-cd YZTA-Hackathon-Project
-
-# 2) Ortam değişkenlerini kopyala
-cp .env.example .env
-cp frontend/.env.example frontend/.env
-
-# 3) Servisleri başlat (ilk kez build edilir)
-docker compose up --build
+```
+Inbound WhatsApp Mesajı (müşteri → sistem)
+        │
+        ▼
+┌─────────────────┐
+│   Supervisor    │  ← Mesajın intent'ini belirler
+│  (Yönlendirici) │
+└────────┬────────┘
+         │ route
+    ┌────┼────┬──────────┐
+    ▼    ▼    ▼          ▼
+┌──────┐┌────────┐┌─────────┐┌──────────┐
+│Karşı-││ Ürün   ││ Sipariş ││  Devir   │
+│lama  ││ Bilgi  ││ Agent   ││  Agent   │
+└──────┘└────────┘└─────────┘└──────────┘
+              │         │
+              ▼         ▼
+         ┌─────────────────┐
+         │   DB Tools      │
+         │ search_products │
+         │ get_order_status│
+         │ lookup_customer │
+         │ list_orders     │
+         └─────────────────┘
+              │
+              ▼
+    WhatsApp Cloud API → Müşteriye otomatik cevap
 ```
 
-İlk açılışta:
+### Akış Detayı
 
-- Alembic migration'ları otomatik uygulanır (`init_db.run_migrations`).
-- Seed kullanıcılar eklenir.
+1. Müşteri WhatsApp'tan mesaj atar
+2. Meta webhook → backend `/api/v1/integrations/whatsapp/webhook`
+3. Mesaj DB'ye kaydedilir (`whatsapp_chat_messages`)
+4. Conversation'da `ai_enabled=true` ise → LangGraph agent tetiklenir
+5. Supervisor mesajın intent'ini belirler (greeting/product_info/order/escalation)
+6. İlgili worker agent tool-calling ile DB'den veri çeker
+7. Cevap WhatsApp Cloud API üzerinden müşteriye gönderilir
+8. Cevap `is_ai_generated=true` ile DB'ye kaydedilir
 
-| Kullanıcı   | Şifre      | Rol   |
-|-------------|------------|-------|
-| yzta-admin  | Yzta123!   | admin |
-| yzta-user   | Yzta123!   | user  |
+### Müşteri Tanıma (WhatsApp → DB)
 
-> **Not:** `.env` dosyasındaki `SECRET_KEY` değerini production'a açmadan önce mutlaka uzun rastgele bir değerle değiştir.
+AI agent, gelen mesajın WhatsApp numarasını (`wa_id`) kullanarak `customers` tablosundaki `whatsapp_id` alanıyla eşleştirir. Müşteri bulunursa siparişleri ve kargo durumu otomatik sorgulanabilir.
 
-## Servisler
+---
 
-| Servis        | URL                          |
-|---------------|------------------------------|
-| Frontend      | http://localhost:5173        |
-| Backend API   | http://localhost:8000/api/v1 |
-| Swagger UI    | http://localhost:8000/docs   |
-| ReDoc         | http://localhost:8000/redoc  |
-| Health        | http://localhost:8000/health |
-| MinIO Console | http://localhost:9201        |
-| PostgreSQL    | localhost:5433               |
+## Hackathon Görev Eşlemesi
 
-## API Özeti
+| # | Görev | Durum |
+|---|-------|-------|
+| 1 | Müşteri İletişimi Otomasyonu (WhatsApp) | ✅ |
+| 2 | Ürün ve Sipariş Takibi | ✅ |
+| 3 | Kargo Süreçleri | ✅ |
+| 4 | Stok / Envanter | ✅ |
+| 5 | İş Akışı ve Görev | ✅ |
+| 6 | Analitik (opsiyonel) | ⏳ |
+| + | AI Agent (LangGraph) | ✅ |
+| + | Bildirim Katmanı | ✅ |
 
-API prefix: `/api/v1`
+---
 
-| Method | Path                | Auth      | Açıklama                                        |
-|--------|---------------------|-----------|-------------------------------------------------|
-| POST   | `/auth/register`    | —         | Yeni kullanıcı kaydı                            |
-| POST   | `/auth/login`       | —         | OAuth2 password flow (rate-limited)             |
-| POST   | `/auth/refresh`     | —         | Access token yenile                             |
-| POST   | `/auth/logout`      | bearer    | Access (+opsiyonel refresh) token'ı revoke et   |
-| GET    | `/users/me`         | bearer    | Mevcut kullanıcı bilgisi                        |
-| PATCH  | `/users/me`         | bearer    | `full_name`, `avatar_key` güncelle              |
-| POST   | `/uploads/presigned`| bearer    | S3 POST policy üret (avatars/products/misc)     |
-| GET    | `/integrations/whatsapp` | bearer | Bağlı WhatsApp hesabını oku                  |
-| POST   | `/integrations/whatsapp` | admin  | WhatsApp Cloud API hesabı bağla              |
-| GET/POST | `/integrations/whatsapp/webhook` | — | Meta webhook (verify + receiver)        |
-| GET    | `/whatsapp/chat/conversations` | bearer | Sohbet listesi (filter, search, paginated) |
-| POST   | `/whatsapp/chat/conversations` | bearer | Yeni sohbet başlat (telefon + mesaj)     |
-| GET    | `/whatsapp/chat/conversations/{id}/messages` | bearer | Konuşmadaki mesajlar          |
-| POST   | `/whatsapp/chat/conversations/{id}/messages` | bearer | Mesaj gönder (Cloud API)       |
-| PATCH  | `/whatsapp/chat/conversations/{id}/status` | bearer | Sohbet durumu (open/pending/closed/spam) |
-| PATCH  | `/whatsapp/chat/conversations/{id}/read` | bearer | Okundu işaretle                    |
+## Lisans
 
-Hızlı login testi:
-
-```bash
-curl -X POST http://localhost:8000/api/v1/auth/login \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=yzta-admin&password=Yzta123!"
-```
-
-## Geliştirme Notları
-
-**Migration ekleme.** Modelde değişiklik yaptıktan sonra:
-
-```bash
-docker compose exec backend alembic revision --autogenerate -m "add column x"
-docker compose exec backend alembic upgrade head
-```
-
-> Migration dosyalarını üretildikten sonra mutlaka gözden geçirip commit'le.
-
-**Frontend bağımlılıkları yenileme.**
-
-```bash
-docker compose exec frontend npm install
-```
-
-**Dosya yükleme akışı.** Frontend `POST /uploads/presigned` ile S3 POST policy alır,
-ardından `multipart/form-data` ile doğrudan MinIO'ya yükler. Policy hem `Content-Type`
-hem `Content-Length-Range` enforce eder; key her zaman `<prefix>/<user_id>/...` formatındadır,
-böylece bir kullanıcı başkasının key'ini referans edemez.
-
-**Rate limiting.** Login endpoint'i in-process sliding-window limiter kullanır
-(IP + username başına 5 dakikada 10 deneme). Birden fazla worker / pod ile
-çalıştırırsanız Redis tabanlı bir limiter'a (slowapi / fastapi-limiter) geçin.
-
-## Dikkat Edilecek Hususlar
-
-- **`.env`** asla commit'lenmez. `.env.example` referans olarak kullanılır.
-- **`SECRET_KEY`** en az 32 karakter ve rastgele olmalı (`openssl rand -hex 32`).
-- **MinIO** lokalde public-read policy ile çalışır. Hassas veri yüklenecekse
-  policy daraltılmalı ve presigned GET üzerinden okuma yapılmalı.
-- **Production** için `ENVIRONMENT=production` set edilmeli (HSTS otomatik aktive olur)
-  ve önüne TLS sonlandıran bir reverse proxy (Traefik / Nginx / Caddy) konulmalı.
-- **JWT logout** stateless yapıyı korumak için `token_blocklist` tablosu kullanır.
-  Tablo zamanla büyür; periyodik olarak `TokenBlocklistService.purge_expired()`
-  çağrılmalı (örn. APScheduler veya bir cron job).
-- **Branch akışı:** `main` korumalı tutulmalı; özellikler `feat/<konu>` branch'inde
-  geliştirilip PR ile birleştirilmeli.
-- **Commit mesajları:** [Conventional Commits](https://www.conventionalcommits.org/) önerilir
-  (`feat:`, `fix:`, `chore:`, ...).
+Hackathon projesi — YZTA 2026.

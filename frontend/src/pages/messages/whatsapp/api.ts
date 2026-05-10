@@ -36,6 +36,7 @@ export interface WhatsAppConversation {
   last_message_at: string | null;
   last_message_direction: MessageDirection | null;
   is_pinned: boolean;
+  ai_enabled: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -52,6 +53,7 @@ export interface WhatsAppChatMessage {
   media_mime_type: string | null;
   error_message: string | null;
   sent_by_user_id: number | null;
+  is_ai_generated: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -128,6 +130,15 @@ export const whatsappChatApi = {
       `/whatsapp/chat/conversations/${id}/read`,
       { method: 'PATCH' },
     ),
+  toggleAi: (id: number, ai_enabled: boolean) =>
+    apiRequest<WhatsAppConversation>(
+      `/whatsapp/chat/conversations/${id}/ai-toggle`,
+      { method: 'PATCH', body: { ai_enabled } },
+    ),
+  delete: (id: number) =>
+    apiRequest<void>(`/whatsapp/chat/conversations/${id}`, {
+      method: 'DELETE',
+    }),
   stats: () =>
     apiRequest<ConversationStats>('/whatsapp/chat/stats'),
 };

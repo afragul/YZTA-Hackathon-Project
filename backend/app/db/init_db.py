@@ -88,6 +88,13 @@ async def seed_users(session: AsyncSession) -> None:
 
 
 async def init_db() -> None:
+    """
+    Legacy entry point kept for backward compatibility.
+
+    Production / docker setups should call `python -m app.db.bootstrap`
+    via the entrypoint script BEFORE starting uvicorn (avoids race
+    conditions with --reload).
+    """
     await run_migrations()
     async with database.session_factory() as session:
         await seed_users(session)

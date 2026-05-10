@@ -113,6 +113,7 @@ class WhatsAppConversation(Base, TimestampMixin):
         nullable=True,
     )
     is_pinned: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    ai_enabled: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     account = relationship("WhatsAppAccount", lazy="joined")
     messages = relationship(
@@ -162,7 +163,11 @@ class WhatsAppChatMessage(Base, TimestampMixin):
     )
 
     direction: Mapped[MessageDirection] = mapped_column(
-        SAEnum(MessageDirection, name="wa_message_direction"),
+        SAEnum(
+            MessageDirection,
+            name="wa_message_direction",
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
     )
     kind: Mapped[MessageKind] = mapped_column(
@@ -196,6 +201,9 @@ class WhatsAppChatMessage(Base, TimestampMixin):
     )
 
     raw_payload: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    is_ai_generated: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
+    )
 
     conversation = relationship(
         "WhatsAppConversation", back_populates="messages", lazy="joined"

@@ -3,13 +3,14 @@ import { useAuth } from '@/auth/context/auth-context';
 import { UserDropdownMenu } from '@/partials/topbar/user-dropdown-menu';
 import {
   LayoutGrid,
-  Layout,
   MessageSquare,
-  Plug,
+  Package,
   Settings,
   ShoppingCart,
   TrendingUp,
+  Truck,
   UserCircle,
+  Warehouse,
 } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
@@ -47,12 +48,6 @@ const menuItems: MenuItem[] = [
     rootPath: '/settings/',
   },
   {
-    icon: Layout,
-    tooltipId: 'MENU.INVENTORY',
-    path: '/inventory',
-    rootPath: '/inventory',
-  },
-  {
     icon: TrendingUp,
     tooltipId: 'MENU.SALES',
     path: '/sales/orders',
@@ -65,7 +60,13 @@ const menuItems: MenuItem[] = [
     rootPath: '/products',
   },
   {
-    icon: Plug,
+    icon: Warehouse,
+    tooltipId: 'MENU.INVENTORY',
+    path: '/inventory/movements',
+    rootPath: '/inventory',
+  },
+  {
+    icon: Truck,
     tooltipId: 'MENU.SHIPPING',
     path: '/shipping',
     rootPath: '/shipping',

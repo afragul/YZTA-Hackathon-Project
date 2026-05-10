@@ -1,6 +1,8 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import {
   AlertCircle,
+  Bot,
+  BotOff,
   Check,
   CheckCheck,
   Clock,
@@ -8,6 +10,8 @@ import {
   MessageSquareDashed,
   Phone,
   Send,
+  Sparkles,
+  Trash2,
   XCircle,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -45,6 +49,8 @@ interface Props {
   sendError: string | null;
   onSend: (body: string) => Promise<void>;
   onChangeStatus: (status: ConversationStatus) => Promise<void>;
+  onToggleAi: (enabled: boolean) => Promise<void>;
+  onDelete: () => Promise<void>;
 }
 
 export function ChatPanel({
@@ -55,6 +61,8 @@ export function ChatPanel({
   sendError,
   onSend,
   onChangeStatus,
+  onToggleAi,
+  onDelete,
 }: Props) {
   const [draft, setDraft] = useState('');
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -63,11 +71,17 @@ export function ChatPanel({
     setDraft('');
   }, [conversation?.id]);
 
+  // Auto-scroll to bottom when conversation changes or new messages arrive.
+  // Triggers on length change AND last-message id change (covers same-length re-renders).
+  const lastMessageId = messages[messages.length - 1]?.id ?? null;
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollTop = el.scrollHeight;
-  }, [messages, conversation?.id]);
+    // Use rAF so the DOM is settled (especially after image loads or large bubbles)
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, [conversation?.id, messages.length, lastMessageId]);
 
   if (!conversation) {
     return (
@@ -97,14 +111,19 @@ export function ChatPanel({
     conversation.contact_name || formatPhone(conversation.wa_id);
 
   return (
-    <section className="grow flex flex-col min-w-0 bg-muted/30">
+    <section className="grow flex flex-col min-w-0 min-h-0 h-full bg-muted/30">
       <ChatHeader
         conversation={conversation}
         name={name}
         onChangeStatus={onChangeStatus}
+        onToggleAi={onToggleAi}
+        onDelete={onDelete}
       />
 
-      <div ref={scrollerRef} className="grow kt-scrollable-y-auto px-4 py-4">
+      <div
+        ref={scrollerRef}
+        className="grow min-h-0 overflow-y-auto px-4 py-4"
+      >
         {loadingMessages && messages.length === 0 ? (
           <MessagesSkeleton />
         ) : messages.length === 0 ? (
@@ -165,11 +184,16 @@ function ChatHeader({
   conversation,
   name,
   onChangeStatus,
+  onToggleAi,
+  onDelete,
 }: {
   conversation: WhatsAppConversation;
   name: string;
   onChangeStatus: (status: ConversationStatus) => Promise<void>;
+  onToggleAi: (enabled: boolean) => Promise<void>;
+  onDelete: () => Promise<void>;
 }) {
+  const aiOn = conversation.ai_enabled;
   return (
     <header className="flex items-center justify-between gap-3 border-b border-input bg-background px-4 py-3">
       <div className="flex items-center gap-3 min-w-0">
@@ -182,6 +206,17 @@ function ChatHeader({
           <div className="flex items-center gap-2">
             <p className="font-medium truncate text-sm">{name}</p>
             <StatusBadge status={conversation.status} />
+            {aiOn && (
+              <Badge
+                variant="primary"
+                appearance="light"
+                size="sm"
+                className="gap-1"
+              >
+                <Sparkles className="size-3" />
+                AI Aktif
+              </Badge>
+            )}
           </div>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
             <Phone className="size-3" />
@@ -189,35 +224,65 @@ function ChatHeader({
           </p>
         </div>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            Durum: {statusLabel(conversation.status)}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-44">
-          <DropdownMenuLabel>Sohbet durumu</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {(['open', 'pending', 'closed', 'spam'] as ConversationStatus[]).map(
-            (s) => (
-              <DropdownMenuItem
-                key={s}
-                onSelect={(e) => {
-                  e.preventDefault();
-                  if (s !== conversation.status) {
-                    void onChangeStatus(s);
-                  }
-                }}
-                className={cn(
-                  s === conversation.status && 'font-semibold',
-                )}
-              >
-                {statusLabel(s)}
-              </DropdownMenuItem>
-            ),
+      <div className="flex items-center gap-2 shrink-0">
+        <Button
+          variant={aiOn ? 'primary' : 'outline'}
+          size="sm"
+          onClick={() => void onToggleAi(!aiOn)}
+          title={aiOn ? 'AI ajan kapat' : 'AI ajan aç'}
+        >
+          {aiOn ? (
+            <>
+              <Bot className="size-3.5" />
+              AI Açık
+            </>
+          ) : (
+            <>
+              <BotOff className="size-3.5" />
+              AI Kapalı
+            </>
           )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">
+              Durum: {statusLabel(conversation.status)}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-44">
+            <DropdownMenuLabel>Sohbet durumu</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {(['open', 'pending', 'closed', 'spam'] as ConversationStatus[]).map(
+              (s) => (
+                <DropdownMenuItem
+                  key={s}
+                  onSelect={(e) => {
+                    e.preventDefault();
+                    if (s !== conversation.status) {
+                      void onChangeStatus(s);
+                    }
+                  }}
+                  className={cn(
+                    s === conversation.status && 'font-semibold',
+                  )}
+                >
+                  {statusLabel(s)}
+                </DropdownMenuItem>
+              ),
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Button
+          variant="outline"
+          size="sm"
+          mode="icon"
+          onClick={() => void onDelete()}
+          title="Sohbeti sil"
+          className="text-destructive hover:text-destructive"
+        >
+          <Trash2 className="size-3.5" />
+        </Button>
+      </div>
     </header>
   );
 }

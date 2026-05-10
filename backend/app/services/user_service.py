@@ -25,6 +25,12 @@ class UserService:
         result = await self.session.execute(select(User).where(User.email == email))
         return result.scalar_one_or_none()
 
+    async def list_all(self) -> list[User]:
+        result = await self.session.execute(
+            select(User).order_by(User.created_at.desc())
+        )
+        return list(result.scalars().all())
+
     async def authenticate(self, username: str, password: str) -> User | None:
         user = await self.get_by_username(username)
         if user is None:

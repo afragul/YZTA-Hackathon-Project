@@ -3,12 +3,21 @@ import { RequireAuth } from '@/auth/require-auth';
 import { ErrorRouting } from '@/errors/error-routing';
 import { Demo4Layout } from '@/layouts/demo4/layout';
 import { ProfilePage } from '@/pages/kobai/account/profile-page';
+import { CustomersPage } from '@/pages/kobai/customers/customers-page';
 import { DashboardPage as KobaiDashboardPage } from '@/pages/kobai/dashboard/dashboard-page';
+import { LowStockPage } from '@/pages/kobai/inventory/low-stock-page';
+import { StockMovementsPage } from '@/pages/kobai/inventory/stock-movements-page';
+import { NotificationsPage } from '@/pages/kobai/notifications/notifications-page';
+import { OrdersPage } from '@/pages/kobai/orders/orders-page';
+import { ProductsPage } from '@/pages/kobai/products/products-page';
 import { ApiKeysPage } from '@/pages/kobai/settings/api-keys-page';
 import { AppearanceSettingsPage } from '@/pages/kobai/settings/appearance-settings-page';
 import { GeneralSettingsPage } from '@/pages/kobai/settings/general-settings-page';
 import { IntegrationsPage } from '@/pages/kobai/settings/integrations-page';
 import { UsersPage } from '@/pages/kobai/settings/users-page';
+import { WhatsappAgentsPage } from '@/pages/kobai/settings/whatsapp-agents-page';
+import { ShipmentsPage } from '@/pages/kobai/shipments/shipments-page';
+import { TasksPage } from '@/pages/kobai/tasks/tasks-page';
 import {
   AccountActivityPage,
   AccountAllowedIPAddressesPage,
@@ -123,6 +132,15 @@ export function AppRoutingSetup() {
           />
           <Route path="/settings/api-keys" element={<ApiKeysPage />} />
           <Route path="/settings/users" element={<UsersPage />} />
+          <Route path="/settings/whatsapp-agents" element={<WhatsappAgentsPage />} />
+          <Route path="/sales/customers" element={<CustomersPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/sales/orders" element={<OrdersPage />} />
+          <Route path="/shipping" element={<ShipmentsPage />} />
+          <Route path="/inventory/movements" element={<StockMovementsPage />} />
+          <Route path="/inventory/low-stock" element={<LowStockPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/dark-sidebar" element={<Demo1DarkSidebarPage />} />
           <Route
             path="/public-profile/profiles/default/"

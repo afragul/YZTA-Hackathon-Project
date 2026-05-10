@@ -81,17 +81,6 @@ export function Demo4Layout() {
                           <StoreClientTopbar />
                         ) : (
                           <>
-                            <SearchDialog
-                              trigger={
-                                <Button
-                                  variant="ghost"
-                                  mode="icon"
-                                  className="hover:bg-primary/10 hover:[&_svg]:text-primary"
-                                >
-                                  <Search className="size-4.5!" />
-                                </Button>
-                              }
-                            />
                             <NotificationsSheet
                               trigger={
                                 <Button

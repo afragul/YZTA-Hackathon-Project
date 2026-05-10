@@ -1,23 +1,24 @@
+import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { LoaderCircleIcon } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import {
+  ColumnDef,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { Search } from 'lucide-react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Container } from '@/components/common/container';
-import { Alert, AlertIcon, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Card, CardFooter, CardHeader, CardTable } from '@/components/ui/card';
+import { DataGrid } from '@/components/ui/data-grid';
+import { DataGridColumnHeader } from '@/components/ui/data-grid-column-header';
+import { DataGridPagination } from '@/components/ui/data-grid-pagination';
+import { DataGridTable } from '@/components/ui/data-grid-table';
+import { Input } from '@/components/ui/input';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { apiRequest } from '@/lib/api-client';
 import { PageHeader } from '../components/page-header';
 
@@ -28,16 +29,119 @@ interface BackendUser {
   full_name: string | null;
   role: 'admin' | 'user';
   is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export function UsersPage() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['me'],
-    queryFn: () => apiRequest<BackendUser>('/users/me'),
+  const intl = useIntl();
+  const [globalFilter, setGlobalFilter] = useState('');
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['users-list'],
+    queryFn: () => apiRequest<BackendUser[]>('/users'),
     staleTime: 30_000,
   });
 
-  const users: BackendUser[] = data ? [data] : [];
+  const items: BackendUser[] = data ?? [];
+
+  const columns = useMemo<ColumnDef<BackendUser>[]>(
+    () => [
+      {
+        accessorKey: 'full_name',
+        header: ({ column }) => (
+          <DataGridColumnHeader
+            column={column}
+            title={intl.formatMessage({ id: 'SETTINGS.USERS.NAME' })}
+          />
+        ),
+        cell: ({ row }) => (
+          <span className="font-medium">
+            {row.original.full_name || '—'}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'username',
+        header: ({ column }) => (
+          <DataGridColumnHeader
+            column={column}
+            title={intl.formatMessage({ id: 'SETTINGS.USERS.USERNAME' })}
+          />
+        ),
+      },
+      {
+        accessorKey: 'email',
+        header: ({ column }) => (
+          <DataGridColumnHeader
+            column={column}
+            title={intl.formatMessage({ id: 'SETTINGS.USERS.EMAIL' })}
+          />
+        ),
+      },
+      {
+        accessorKey: 'role',
+        header: ({ column }) => (
+          <DataGridColumnHeader
+            column={column}
+            title={intl.formatMessage({ id: 'SETTINGS.USERS.ROLE' })}
+          />
+        ),
+        cell: ({ row }) => (
+          <Badge
+            variant={row.original.role === 'admin' ? 'primary' : 'secondary'}
+            appearance="light"
+          >
+            <FormattedMessage
+              id={
+                row.original.role === 'admin'
+                  ? 'ACCOUNT.PROFILE.ROLE_ADMIN'
+                  : 'ACCOUNT.PROFILE.ROLE_USER'
+              }
+            />
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'is_active',
+        header: ({ column }) => (
+          <DataGridColumnHeader
+            column={column}
+            title={intl.formatMessage({ id: 'SETTINGS.USERS.STATUS' })}
+          />
+        ),
+        cell: ({ row }) => (
+          <Badge
+            variant={row.original.is_active ? 'success' : 'destructive'}
+            appearance="light"
+          >
+            <FormattedMessage
+              id={
+                row.original.is_active
+                  ? 'ACCOUNT.PROFILE.ACTIVE'
+                  : 'ACCOUNT.PROFILE.INACTIVE'
+              }
+            />
+          </Badge>
+        ),
+      },
+    ],
+    [intl],
+  );
+
+  const table = useReactTable({
+    data: items,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { globalFilter },
+    onGlobalFilterChange: setGlobalFilter,
+    initialState: {
+      pagination: { pageSize: 10 },
+    },
+  });
 
   return (
     <>
@@ -48,91 +152,28 @@ export function UsersPage() {
 
       <Container>
         <Card>
-          <CardHeader>
-            <CardTitle>
-              <FormattedMessage id="SETTINGS.USERS.TITLE" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            {isLoading && (
-              <div className="flex items-center gap-2 p-5 text-sm text-muted-foreground">
-                <LoaderCircleIcon className="size-4 animate-spin" />
-                <FormattedMessage id="COMMON.LOADING" />
+          <DataGrid table={table} recordCount={items.length} isLoading={isLoading}>
+            <CardHeader className="py-3.5 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Search className="size-4 text-muted-foreground" />
+                <Input
+                  placeholder={intl.formatMessage({ id: 'COMMON.SEARCH' })}
+                  value={globalFilter}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  className="h-8 w-40 lg:w-60"
+                />
               </div>
-            )}
-            {isError && !isLoading && (
-              <div className="p-5">
-                <Alert variant="destructive" appearance="light">
-                  <AlertIcon />
-                  <AlertTitle>
-                    <FormattedMessage id="SETTINGS.USERS.LOAD_ERROR" />
-                  </AlertTitle>
-                </Alert>
-              </div>
-            )}
-            {!isLoading && !isError && (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>
-                      <FormattedMessage id="SETTINGS.USERS.NAME" />
-                    </TableHead>
-                    <TableHead>
-                      <FormattedMessage id="SETTINGS.USERS.USERNAME" />
-                    </TableHead>
-                    <TableHead>
-                      <FormattedMessage id="SETTINGS.USERS.EMAIL" />
-                    </TableHead>
-                    <TableHead>
-                      <FormattedMessage id="SETTINGS.USERS.ROLE" />
-                    </TableHead>
-                    <TableHead>
-                      <FormattedMessage id="SETTINGS.USERS.STATUS" />
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((u) => (
-                    <TableRow key={u.id}>
-                      <TableCell className="font-medium">
-                        {u.full_name || '—'}
-                      </TableCell>
-                      <TableCell>{u.username}</TableCell>
-                      <TableCell>{u.email}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={u.role === 'admin' ? 'primary' : 'secondary'}
-                          appearance="light"
-                        >
-                          <FormattedMessage
-                            id={
-                              u.role === 'admin'
-                                ? 'ACCOUNT.PROFILE.ROLE_ADMIN'
-                                : 'ACCOUNT.PROFILE.ROLE_USER'
-                            }
-                          />
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={u.is_active ? 'success' : 'destructive'}
-                          appearance="light"
-                        >
-                          <FormattedMessage
-                            id={
-                              u.is_active
-                                ? 'ACCOUNT.PROFILE.ACTIVE'
-                                : 'ACCOUNT.PROFILE.INACTIVE'
-                            }
-                          />
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
+            </CardHeader>
+            <CardTable>
+              <ScrollArea>
+                <DataGridTable />
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
+            </CardTable>
+            <CardFooter className="justify-center">
+              <DataGridPagination />
+            </CardFooter>
+          </DataGrid>
         </Card>
       </Container>
     </>

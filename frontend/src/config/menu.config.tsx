@@ -69,6 +69,8 @@ export const MENU_SIDEBAR: MenuConfig = [
     icon: UserCircle,
     children: [
       { title: 'MENU.ACCOUNT.PROFILE', path: '/account/profile' },
+      { title: 'MENU.TASKS', path: '/tasks' },
+      { title: 'MENU.NOTIFICATIONS', path: '/notifications' },
     ],
   },
   {
@@ -78,35 +80,18 @@ export const MENU_SIDEBAR: MenuConfig = [
       { title: 'MENU.SETTINGS.GENERAL', path: '/settings/general' },
       { title: 'MENU.SETTINGS.APPEARANCE', path: '/settings/appearance' },
       { title: 'MENU.SETTINGS.INTEGRATIONS', path: '/settings/integrations' },
+      { title: 'MENU.SETTINGS.WHATSAPP_AGENTS', path: '/settings/whatsapp-agents' },
       { title: 'MENU.SETTINGS.API_KEYS', path: '/settings/api-keys' },
       { title: 'MENU.SETTINGS.USERS', path: '/settings/users' },
     ],
   },
   { heading: 'MENU.HEADING.OPERATIONS' },
   {
-    title: 'MENU.INVENTORY',
-    icon: Warehouse,
-    children: [
-      { title: 'MENU.INVENTORY.LIST', path: '/inventory' },
-      { title: 'MENU.INVENTORY.ALERTS', path: '/inventory/alerts' },
-      { title: 'MENU.INVENTORY.MOVEMENTS', path: '/inventory/movements' },
-      { title: 'MENU.INVENTORY.SUPPLIERS', path: '/inventory/suppliers' },
-      {
-        title: 'MENU.INVENTORY.AI_SUGGESTIONS',
-        path: '/inventory/ai-suggestions',
-      },
-    ],
-  },
-  {
     title: 'MENU.SALES',
     icon: TrendingUp,
     children: [
       { title: 'MENU.SALES.ORDERS', path: '/sales/orders' },
-      { title: 'MENU.SALES.PENDING', path: '/sales/pending' },
-      { title: 'MENU.SALES.COMPLETED', path: '/sales/completed' },
-      { title: 'MENU.SALES.REFUNDS', path: '/sales/refunds' },
       { title: 'MENU.SALES.CUSTOMERS', path: '/sales/customers' },
-      { title: 'MENU.SALES.REPORTS', path: '/sales/reports' },
     ],
   },
   {
@@ -114,21 +99,21 @@ export const MENU_SIDEBAR: MenuConfig = [
     icon: ShoppingCart,
     children: [
       { title: 'MENU.PRODUCTS.LIST', path: '/products' },
-      { title: 'MENU.PRODUCTS.NEW', path: '/products/new' },
-      { title: 'MENU.PRODUCTS.CATEGORIES', path: '/products/categories' },
-      { title: 'MENU.PRODUCTS.IMPORT', path: '/products/import' },
-      { title: 'MENU.PRODUCTS.PRICING', path: '/products/pricing' },
+    ],
+  },
+  {
+    title: 'MENU.INVENTORY',
+    icon: Warehouse,
+    children: [
+      { title: 'MENU.INVENTORY.MOVEMENTS', path: '/inventory/movements' },
+      { title: 'MENU.INVENTORY.LOW_STOCK', path: '/inventory/low-stock' },
     ],
   },
   {
     title: 'MENU.SHIPPING',
     icon: Truck,
     children: [
-      { title: 'MENU.SHIPPING.ACTIVE', path: '/shipping' },
-      { title: 'MENU.SHIPPING.DELAYS', path: '/shipping/delays' },
-      { title: 'MENU.SHIPPING.DELIVERED', path: '/shipping/delivered' },
-      { title: 'MENU.SHIPPING.CARRIERS', path: '/shipping/carriers' },
-      { title: 'MENU.SHIPPING.LABELS', path: '/shipping/labels' },
+      { title: 'MENU.SHIPPING.LIST', path: '/shipping' },
     ],
   },
   {
@@ -136,8 +121,6 @@ export const MENU_SIDEBAR: MenuConfig = [
     icon: MessageSquare,
     children: [
       { title: 'MENU.MESSAGES.WHATSAPP', path: '/messages/whatsapp' },
-      { title: 'MENU.MESSAGES.FACEBOOK', disabled: true },
-      { title: 'MENU.MESSAGES.INSTAGRAM', disabled: true },
     ],
   },
 ];

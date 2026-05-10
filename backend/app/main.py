@@ -8,7 +8,6 @@ from fastapi.responses import JSONResponse
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.middleware import SecurityHeadersMiddleware
-from app.db.init_db import init_db
 from app.db.session import database
 from app.services.storage_service import get_storage
 
@@ -24,7 +23,8 @@ logger = logging.getLogger("app")
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     logger.info("Starting %s in %s mode", settings.PROJECT_NAME, settings.ENVIRONMENT)
-    await init_db()
+    # NOTE: migrations + seed run via scripts/entrypoint.sh (python -m app.db.bootstrap)
+    # BEFORE uvicorn starts, to avoid race conditions with --reload.
     try:
         get_storage().ensure_bucket()
     except Exception as exc:

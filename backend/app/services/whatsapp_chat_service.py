@@ -247,6 +247,16 @@ class WhatsAppChatService:
             await self.session.refresh(conv)
         return conv
 
+    async def delete_conversation(
+        self, *, account_id: int, conversation_id: int
+    ) -> None:
+        """Hard-delete a conversation and all its messages (cascade)."""
+        conv = await self.get_conversation(
+            account_id=account_id, conversation_id=conversation_id
+        )
+        await self.session.delete(conv)
+        await self.session.commit()
+
     async def get_stats(self, *, account_id: int) -> WhatsAppConversationStats:
         rows = await self.session.execute(
             select(
@@ -557,6 +567,119 @@ class WhatsAppChatService:
         await self.session.commit()
         logger.info(
             "Inbound message wa_id=%s wamid=%s kind=%s", wa_id, wamid, kind
+        )
+
+        # If AI is enabled for this conversation, dispatch to the agent.
+        if conv.ai_enabled and body:
+            try:
+                await self._run_ai_agent(account=account, conversation=conv, user_text=body)
+            except Exception as exc:  # noqa: BLE001
+                logger.exception("AI agent failed for conv=%s: %s", conv.id, exc)
+
+    async def _run_ai_agent(
+        self,
+        *,
+        account: WhatsAppAccount,
+        conversation: WhatsAppConversation,
+        user_text: str,
+    ) -> None:
+        """Run the LangGraph agent and send the response back via WhatsApp Cloud API."""
+        from app.services.agent_service import AgentService
+
+        agent_service = AgentService(self.session)
+        result = await agent_service.process_message(
+            conversation=conversation,
+            user_message=user_text,
+        )
+
+        # Refresh conversation in case the agent service mutated it.
+        await self.session.refresh(conversation)
+
+        if result["needs_escalation"]:
+            # Disable AI on this conversation; a human will take over.
+            conversation.ai_enabled = False
+            self.session.add(conversation)
+            await self.session.commit()
+            logger.info("Conversation %s escalated to human", conversation.id)
+            return
+
+        response_text = result["response_text"]
+        if not response_text:
+            return
+
+        # Persist outbound AI message and dispatch via Graph API.
+        await self._send_ai_text_message(
+            account=account,
+            conversation=conversation,
+            text=response_text,
+        )
+
+    async def _send_ai_text_message(
+        self,
+        *,
+        account: WhatsAppAccount,
+        conversation: WhatsAppConversation,
+        text: str,
+    ) -> None:
+        """Send an outbound text via Cloud API and persist with is_ai_generated=True."""
+        from app.core.secrets import decrypt_secret
+        import httpx
+
+        access_token = decrypt_secret(account.access_token_ciphertext)
+        url = (
+            f"{settings.WHATSAPP_GRAPH_BASE_URL.rstrip('/')}"
+            f"/{account.api_version}/{account.phone_number_id}/messages"
+        )
+        body = {
+            "messaging_product": "whatsapp",
+            "to": conversation.wa_id,
+            "type": "text",
+            "text": {"body": text},
+        }
+        wamid: str | None = None
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                resp = await client.post(
+                    url,
+                    json=body,
+                    headers={
+                        "Authorization": f"Bearer {access_token}",
+                        "Content-Type": "application/json",
+                    },
+                )
+            if resp.status_code == 200:
+                data = resp.json()
+                msgs = data.get("messages") or []
+                if msgs:
+                    wamid = msgs[0].get("id")
+            else:
+                logger.warning(
+                    "AI outbound failed: %s %s",
+                    resp.status_code,
+                    resp.text[:200],
+                )
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("AI outbound network error: %s", exc)
+
+        # Persist regardless (so the panel reflects the AI's reply).
+        msg = WhatsAppChatMessage(
+            conversation_id=conversation.id,
+            wamid=wamid,
+            direction=MessageDirection.OUTBOUND,
+            kind=MessageKind.TEXT,
+            status=MessageStatus.SENT if wamid else MessageStatus.FAILED,
+            body=text,
+            is_ai_generated=True,
+        )
+        self.session.add(msg)
+
+        conversation.last_message_text = text
+        conversation.last_message_at = datetime.now(timezone.utc)
+        conversation.last_message_direction = MessageDirection.OUTBOUND
+        self.session.add(conversation)
+        await self.session.commit()
+        logger.info(
+            "AI response sent to conv=%s wamid=%s", conversation.id, wamid
         )
 
     async def _apply_status_update(self, evt: dict[str, Any]) -> None:

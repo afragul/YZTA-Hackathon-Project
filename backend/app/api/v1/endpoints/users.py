@@ -1,11 +1,26 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
 
-from app.api.deps import CurrentUser, UserServiceDep
+from app.api.deps import CurrentUser, UserServiceDep, require_admin
+from app.models.user import User
 from app.schemas.presenters import user_to_read
 from app.schemas.user import UserRead, UserUpdateMe
 
 
 router = APIRouter(prefix="/users", tags=["users"])
+
+
+@router.get(
+    "",
+    response_model=list[UserRead],
+    status_code=status.HTTP_200_OK,
+    summary="List all users",
+)
+async def list_users(
+    current_user: CurrentUser,
+    user_service: UserServiceDep,
+) -> list[UserRead]:
+    users = await user_service.list_all()
+    return [user_to_read(u) for u in users]
 
 
 @router.get(

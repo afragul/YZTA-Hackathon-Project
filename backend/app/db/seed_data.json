@@ -1,0 +1,1366 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@anadoludogal.com",
+      "password": "Admin123!",
+      "role": "admin",
+      "full_name": "Mehmet Yılmaz"
+    },
+    {
+      "username": "depo-ali",
+      "email": "ali@anadoludogal.com",
+      "password": "Depo123!",
+      "role": "user",
+      "full_name": "Ali Kaya"
+    },
+    {
+      "username": "kargo-ayse",
+      "email": "ayse@anadoludogal.com",
+      "password": "Kargo123!",
+      "role": "user",
+      "full_name": "Ayşe Demir"
+    },
+    {
+      "username": "satis-fatma",
+      "email": "fatma@anadoludogal.com",
+      "password": "Satis123!",
+      "role": "user",
+      "full_name": "Fatma Çelik"
+    },
+    {
+      "username": "muhasebe-hasan",
+      "email": "hasan@anadoludogal.com",
+      "password": "Muhasebe123!",
+      "role": "user",
+      "full_name": "Hasan Öztürk"
+    }
+  ],
+  "customers": [
+    {
+      "full_name": "Zeynep Arslan",
+      "phone": "05321234567",
+      "whatsapp_id": "905321234567",
+      "whatsapp_profile_name": "Zeynep",
+      "whatsapp_opt_in": true,
+      "email": "zeynep.arslan@gmail.com",
+      "address": "Bağdat Cad. No:45/3 Kadıköy",
+      "city": "İstanbul",
+      "notes": "Düzenli müşteri, her ay bal siparişi verir"
+    },
+    {
+      "full_name": "Ahmet Yıldırım",
+      "phone": "05339876543",
+      "whatsapp_id": "905339876543",
+      "whatsapp_profile_name": "Ahmet Y.",
+      "whatsapp_opt_in": true,
+      "email": "ahmet.yildirim@hotmail.com",
+      "address": "Atatürk Mah. 123. Sok. No:7 Çankaya",
+      "city": "Ankara",
+      "notes": "Toptan alım yapıyor, restoran sahibi"
+    },
+    {
+      "full_name": "Elif Şahin",
+      "phone": "05425551234",
+      "whatsapp_id": "905425551234",
+      "whatsapp_profile_name": "Elif 🌿",
+      "whatsapp_opt_in": true,
+      "email": "elif.sahin@yahoo.com",
+      "address": "Alsancak Mah. Kıbrıs Şehitleri Cad. No:89",
+      "city": "İzmir",
+      "notes": null
+    },
+    {
+      "full_name": "Mustafa Koç",
+      "phone": "05367778899",
+      "whatsapp_id": "905367778899",
+      "whatsapp_profile_name": "Mustafa",
+      "whatsapp_opt_in": false,
+      "email": "mustafa.koc@gmail.com",
+      "address": "Nilüfer Mah. Özlüce Sok. No:12/A",
+      "city": "Bursa",
+      "notes": "Peynir ve zeytin tercih ediyor"
+    },
+    {
+      "full_name": "Fatma Güneş",
+      "phone": "05441112233",
+      "whatsapp_id": "905441112233",
+      "whatsapp_profile_name": "Fatma Güneş",
+      "whatsapp_opt_in": true,
+      "email": null,
+      "address": "Muratpaşa Mah. Lara Cad. No:56",
+      "city": "Antalya",
+      "notes": "Hediye paketi istiyor genelde"
+    },
+    {
+      "full_name": "Hüseyin Aydın",
+      "phone": "05553334455",
+      "whatsapp_id": "905553334455",
+      "whatsapp_profile_name": "Hüseyin",
+      "whatsapp_opt_in": true,
+      "email": "huseyin.aydin@outlook.com",
+      "address": "Selçuklu Mah. Mevlana Cad. No:34",
+      "city": "Konya",
+      "notes": null
+    },
+    {
+      "full_name": "Ayşe Korkmaz",
+      "phone": "05062223344",
+      "whatsapp_id": "905062223344",
+      "whatsapp_profile_name": "Ayşe K",
+      "whatsapp_opt_in": true,
+      "email": "ayse.korkmaz@gmail.com",
+      "address": "Atakum Mah. Sahil Yolu No:78",
+      "city": "Samsun",
+      "notes": "Karadeniz mutfağı meraklısı, fındık ve bal alıyor"
+    },
+    {
+      "full_name": "Osman Çetin",
+      "phone": "05319998877",
+      "whatsapp_id": "905319998877",
+      "whatsapp_profile_name": "Osman Bey",
+      "whatsapp_opt_in": false,
+      "email": "osman.cetin@icloud.com",
+      "address": "Melikgazi Mah. Sivas Cad. No:23",
+      "city": "Kayseri",
+      "notes": "Pastırma ve sucuk da soruyor ama satmıyoruz"
+    },
+    {
+      "full_name": "Derya Aksoy",
+      "phone": "05427776655",
+      "whatsapp_id": "905427776655",
+      "whatsapp_profile_name": "Derya 🍯",
+      "whatsapp_opt_in": true,
+      "email": "derya.aksoy@gmail.com",
+      "address": "Osmangazi Mah. İnönü Cad. No:90/5",
+      "city": "Eskişehir",
+      "notes": "Vegan ürünler tercih ediyor"
+    },
+    {
+      "full_name": "İbrahim Polat",
+      "phone": "05366665544",
+      "whatsapp_id": "905366665544",
+      "whatsapp_profile_name": "İbrahim",
+      "whatsapp_opt_in": true,
+      "email": "ibrahim.polat@gmail.com",
+      "address": "Yenişehir Mah. Adana Cad. No:15",
+      "city": "Mersin",
+      "notes": "Kurumsal alım, ofis için meyve kurusu"
+    },
+    {
+      "full_name": "Selin Yılmaz",
+      "phone": "05451239876",
+      "whatsapp_id": "905451239876",
+      "whatsapp_profile_name": "Selin",
+      "whatsapp_opt_in": true,
+      "email": "selin.yilmaz@gmail.com",
+      "address": "Beşiktaş Mah. Barbaros Bulvarı No:22/4",
+      "city": "İstanbul",
+      "notes": "Influencer, ürün tanıtımı yapıyor"
+    },
+    {
+      "full_name": "Kadir Özkan",
+      "phone": "05387654321",
+      "whatsapp_id": "905387654321",
+      "whatsapp_profile_name": "Kadir",
+      "whatsapp_opt_in": false,
+      "email": "kadir.ozkan@hotmail.com",
+      "address": "Çayyolu Mah. 8. Cadde No:55",
+      "city": "Ankara",
+      "notes": null
+    },
+    {
+      "full_name": "Selim Çepni",
+      "phone": "05454400768",
+      "whatsapp_id": "905454400768",
+      "whatsapp_profile_name": "selim çepni",
+      "whatsapp_opt_in": true,
+      "email": "selim.cepni@gmail.com",
+      "address": "Esentepe Mah. Büyükdere Cad. No:128 Şişli",
+      "city": "İstanbul",
+      "notes": "WhatsApp kanalından düzenli sipariş veriyor."
+    }
+  ],
+  "products": [
+    {
+      "sku": "BAL-CICEK-1KG",
+      "name": "Karadeniz Çiçek Balı 1kg",
+      "description": "Trabzon yaylalarından toplanan saf çiçek balı. Katkısız, doğal.",
+      "category": "bal",
+      "unit": "piece",
+      "price": "450.00",
+      "stock": "85.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "BAL-KESTANE-1KG",
+      "name": "Kestane Balı 1kg",
+      "description": "Artvin ormanlarından kestane balı. Koyu renkli, yoğun aromalı.",
+      "category": "bal",
+      "unit": "piece",
+      "price": "650.00",
+      "stock": "32.000",
+      "low_stock_threshold": "8.000",
+      "is_active": true
+    },
+    {
+      "sku": "BAL-YAYLA-500G",
+      "name": "Yayla Balı 500g",
+      "description": "Rize yaylalarından süzme yayla balı.",
+      "category": "bal",
+      "unit": "piece",
+      "price": "280.00",
+      "stock": "120.000",
+      "low_stock_threshold": "15.000",
+      "is_active": true
+    },
+    {
+      "sku": "PEK-NAR-700ML",
+      "name": "Ev Yapımı Nar Ekşisi 700ml",
+      "description": "Hatay usulü geleneksel nar ekşisi. Katkısız.",
+      "category": "pekmez",
+      "unit": "piece",
+      "price": "180.00",
+      "stock": "45.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "PEK-UZUM-800G",
+      "name": "Üzüm Pekmezi 800g",
+      "description": "Tokat üzümünden geleneksel yöntemle yapılan pekmez.",
+      "category": "pekmez",
+      "unit": "piece",
+      "price": "120.00",
+      "stock": "67.000",
+      "low_stock_threshold": "12.000",
+      "is_active": true
+    },
+    {
+      "sku": "PEK-DUT-500G",
+      "name": "Dut Pekmezi 500g",
+      "description": "Malatya siyah dutundan saf pekmez.",
+      "category": "pekmez",
+      "unit": "piece",
+      "price": "95.00",
+      "stock": "5.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "KUR-KAYISI-500G",
+      "name": "Kuru Kayısı 500g",
+      "description": "Malatya güneşinde kurutulmuş organik kayısı.",
+      "category": "kurutulmus-meyve",
+      "unit": "piece",
+      "price": "85.00",
+      "stock": "200.000",
+      "low_stock_threshold": "20.000",
+      "is_active": true
+    },
+    {
+      "sku": "KUR-INCIR-500G",
+      "name": "Kuru İncir 500g",
+      "description": "Aydın Nazilli inciri. Doğal kurutma.",
+      "category": "kurutulmus-meyve",
+      "unit": "piece",
+      "price": "110.00",
+      "stock": "150.000",
+      "low_stock_threshold": "15.000",
+      "is_active": true
+    },
+    {
+      "sku": "KUR-FINDIK-1KG",
+      "name": "Giresun Tombul Fındık 1kg",
+      "description": "Giresun tombul fındık, taze hasat, kavrulmamış.",
+      "category": "kuruyemis",
+      "unit": "piece",
+      "price": "320.00",
+      "stock": "75.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "KUR-CEVIZ-500G",
+      "name": "İç Ceviz 500g",
+      "description": "Bingöl cevizi, el kırması, taze.",
+      "category": "kuruyemis",
+      "unit": "piece",
+      "price": "220.00",
+      "stock": "60.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "PEY-TULUM-500G",
+      "name": "Erzincan Tulum Peyniri 500g",
+      "description": "Geleneksel yöntemle olgunlaştırılmış tulum peyniri.",
+      "category": "peynir",
+      "unit": "piece",
+      "price": "250.00",
+      "stock": "28.000",
+      "low_stock_threshold": "5.000",
+      "is_active": true
+    },
+    {
+      "sku": "PEY-CECIL-300G",
+      "name": "Çeçil Peyniri 300g",
+      "description": "Kars yöresinden el yapımı çeçil peyniri.",
+      "category": "peynir",
+      "unit": "piece",
+      "price": "180.00",
+      "stock": "3.000",
+      "low_stock_threshold": "5.000",
+      "is_active": true
+    },
+    {
+      "sku": "YAG-ZEYT-1LT",
+      "name": "Soğuk Sıkım Zeytinyağı 1lt",
+      "description": "Ayvalık zeytininden ilk hasat, soğuk sıkım natürel sızma.",
+      "category": "yag",
+      "unit": "piece",
+      "price": "380.00",
+      "stock": "42.000",
+      "low_stock_threshold": "8.000",
+      "is_active": true
+    },
+    {
+      "sku": "YAG-TEREYAG-500G",
+      "name": "Yaylacı Tereyağı 500g",
+      "description": "Trabzon yaylasından yayık tereyağı.",
+      "category": "yag",
+      "unit": "piece",
+      "price": "200.00",
+      "stock": "18.000",
+      "low_stock_threshold": "5.000",
+      "is_active": true
+    },
+    {
+      "sku": "CAY-SIYAH-500G",
+      "name": "Rize Organik Siyah Çay 500g",
+      "description": "Çaykur bölgesinden organik sertifikalı siyah çay.",
+      "category": "cay",
+      "unit": "piece",
+      "price": "150.00",
+      "stock": "95.000",
+      "low_stock_threshold": "20.000",
+      "is_active": true
+    },
+    {
+      "sku": "TAHIN-300G",
+      "name": "Taş Değirmen Tahin 300g",
+      "description": "Antep susam tahinı, taş değirmende öğütülmüş.",
+      "category": "kahvaltilik",
+      "unit": "piece",
+      "price": "75.00",
+      "stock": "55.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "ZEYTIN-SIYAH-1KG",
+      "name": "Gemlik Siyah Zeytin 1kg",
+      "description": "Gemlik tipi doğal salamura siyah zeytin.",
+      "category": "kahvaltilik",
+      "unit": "piece",
+      "price": "160.00",
+      "stock": "70.000",
+      "low_stock_threshold": "10.000",
+      "is_active": true
+    },
+    {
+      "sku": "RECEL-VISNE-400G",
+      "name": "Ev Yapımı Vişne Reçeli 400g",
+      "description": "Afyon vişnesinden az şekerli ev reçeli.",
+      "category": "recel",
+      "unit": "piece",
+      "price": "65.00",
+      "stock": "40.000",
+      "low_stock_threshold": "8.000",
+      "is_active": true
+    },
+    {
+      "sku": "KURUTULMUS-DOMATES-200G",
+      "name": "Kurutulmuş Domates 200g",
+      "description": "Ege güneşinde kurutulmuş domates, zeytinyağlı.",
+      "category": "kurutulmus-sebze",
+      "unit": "piece",
+      "price": "55.00",
+      "stock": "90.000",
+      "low_stock_threshold": "15.000",
+      "is_active": true
+    },
+    {
+      "sku": "PAKET-KAHVALTI",
+      "name": "Anadolu Kahvaltı Paketi",
+      "description": "Bal + peynir + zeytin + tereyağı + reçel hediye seti.",
+      "category": "paket",
+      "unit": "piece",
+      "price": "850.00",
+      "stock": "12.000",
+      "low_stock_threshold": "3.000",
+      "is_active": true
+    }
+  ],
+  "orders": [
+    {
+      "order_number": "ORD-2026-0001",
+      "customer_index": 0,
+      "status": "delivered",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 0,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 6,
+          "quantity": "3.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0002",
+      "customer_index": 1,
+      "status": "delivered",
+      "currency": "TRY",
+      "note": "Restoran için toptan, fatura kesilecek",
+      "items": [
+        {
+          "product_index": 0,
+          "quantity": "10.000"
+        },
+        {
+          "product_index": 4,
+          "quantity": "5.000"
+        },
+        {
+          "product_index": 12,
+          "quantity": "4.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0003",
+      "customer_index": 2,
+      "status": "shipped",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 1,
+          "quantity": "1.000"
+        },
+        {
+          "product_index": 14,
+          "quantity": "2.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0004",
+      "customer_index": 3,
+      "status": "preparing",
+      "currency": "TRY",
+      "note": "Peynirler soğuk zincirle gönderilsin",
+      "items": [
+        {
+          "product_index": 10,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 11,
+          "quantity": "3.000"
+        },
+        {
+          "product_index": 16,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0005",
+      "customer_index": 4,
+      "status": "shipped",
+      "currency": "TRY",
+      "note": "Hediye paketi olarak sarılsın",
+      "items": [
+        {
+          "product_index": 19,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0006",
+      "customer_index": 5,
+      "status": "confirmed",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 2,
+          "quantity": "4.000"
+        },
+        {
+          "product_index": 15,
+          "quantity": "2.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0007",
+      "customer_index": 6,
+      "status": "pending",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 8,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 0,
+          "quantity": "1.000"
+        },
+        {
+          "product_index": 14,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0008",
+      "customer_index": 7,
+      "status": "cancelled",
+      "currency": "TRY",
+      "note": "Müşteri iptal etti - adres değişikliği",
+      "items": [
+        {
+          "product_index": 9,
+          "quantity": "1.000"
+        },
+        {
+          "product_index": 7,
+          "quantity": "2.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0009",
+      "customer_index": 8,
+      "status": "shipped",
+      "currency": "TRY",
+      "note": "Vegan ürünler",
+      "items": [
+        {
+          "product_index": 3,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 18,
+          "quantity": "3.000"
+        },
+        {
+          "product_index": 15,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0010",
+      "customer_index": 9,
+      "status": "confirmed",
+      "currency": "TRY",
+      "note": "Ofise teslim, güvenlik aranacak",
+      "items": [
+        {
+          "product_index": 6,
+          "quantity": "10.000"
+        },
+        {
+          "product_index": 7,
+          "quantity": "5.000"
+        },
+        {
+          "product_index": 8,
+          "quantity": "3.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0011",
+      "customer_index": 10,
+      "status": "pending",
+      "currency": "TRY",
+      "note": "Tanıtım için ürün görseli çekilecek",
+      "items": [
+        {
+          "product_index": 19,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 1,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0012",
+      "customer_index": 11,
+      "status": "preparing",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 12,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 16,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 17,
+          "quantity": "3.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0013",
+      "customer_index": 12,
+      "status": "shipped",
+      "currency": "TRY",
+      "note": "WhatsApp üzerinden sipariş",
+      "items": [
+        {
+          "product_index": 0,
+          "quantity": "2.000"
+        },
+        {
+          "product_index": 8,
+          "quantity": "1.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0014",
+      "customer_index": 12,
+      "status": "delivered",
+      "currency": "TRY",
+      "note": null,
+      "items": [
+        {
+          "product_index": 1,
+          "quantity": "1.000"
+        },
+        {
+          "product_index": 14,
+          "quantity": "2.000"
+        }
+      ]
+    },
+    {
+      "order_number": "ORD-2026-0015",
+      "customer_index": 12,
+      "status": "preparing",
+      "currency": "TRY",
+      "note": "Hediye paketi olsun",
+      "items": [
+        {
+          "product_index": 19,
+          "quantity": "1.000"
+        }
+      ]
+    }
+  ],
+  "shipments": [
+    {
+      "order_index": 0,
+      "carrier": "aras",
+      "tracking_number": "ARS2026051012345",
+      "status": "delivered",
+      "expected_delivery": "2026-05-08",
+      "delivered_at": "2026-05-07T14:30:00+03:00",
+      "last_event": "Teslim edildi - Alıcı imzaladı"
+    },
+    {
+      "order_index": 1,
+      "carrier": "yurtici",
+      "tracking_number": "YK2026051067890",
+      "status": "delivered",
+      "expected_delivery": "2026-05-07",
+      "delivered_at": "2026-05-07T11:15:00+03:00",
+      "last_event": "Teslim edildi - Kapıda teslim"
+    },
+    {
+      "order_index": 2,
+      "carrier": "mng",
+      "tracking_number": "MNG2026051011111",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-12",
+      "delivered_at": null,
+      "last_event": "Aktarma merkezinde - İstanbul"
+    },
+    {
+      "order_index": 3,
+      "carrier": "yurtici",
+      "tracking_number": "YK2026051098765",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-13",
+      "delivered_at": null,
+      "last_event": "Şubeden çıktı - Bursa transfer"
+    },
+    {
+      "order_index": 4,
+      "carrier": "aras",
+      "tracking_number": "ARS2026051022222",
+      "status": "delayed",
+      "expected_delivery": "2026-05-09",
+      "delivered_at": null,
+      "last_event": "Dağıtım aracında - Gecikme bildirimi"
+    },
+    {
+      "order_index": 5,
+      "carrier": "mng",
+      "tracking_number": "MNG2026051044444",
+      "status": "out_for_delivery",
+      "expected_delivery": "2026-05-10",
+      "delivered_at": null,
+      "last_event": "Dağıtıma çıktı - Konya merkez"
+    },
+    {
+      "order_index": 6,
+      "carrier": "ptt",
+      "tracking_number": "PTT2026051055555",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-14",
+      "delivered_at": null,
+      "last_event": "Kabul edildi - Trabzon şubesi"
+    },
+    {
+      "order_index": 8,
+      "carrier": "ptt",
+      "tracking_number": "PTT2026051033333",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-11",
+      "delivered_at": null,
+      "last_event": "Çıkış şubesinden ayrıldı - Trabzon"
+    },
+    {
+      "order_index": 9,
+      "carrier": "aras",
+      "tracking_number": "ARS2026051066666",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-13",
+      "delivered_at": null,
+      "last_event": "Aktarma merkezine ulaştı - Ankara"
+    },
+    {
+      "order_index": 10,
+      "carrier": "yurtici",
+      "tracking_number": "YK2026051077777",
+      "status": "delayed",
+      "expected_delivery": "2026-05-09",
+      "delivered_at": null,
+      "last_event": "Adres bilgisi eksik - Müşteri aranıyor"
+    },
+    {
+      "order_index": 11,
+      "carrier": "mng",
+      "tracking_number": "MNG2026051088888",
+      "status": "out_for_delivery",
+      "expected_delivery": "2026-05-10",
+      "delivered_at": null,
+      "last_event": "Dağıtıma çıktı - Ankara Çankaya"
+    },
+    {
+      "order_index": 12,
+      "carrier": "yurtici",
+      "tracking_number": "YK2026051199999",
+      "status": "in_transit",
+      "expected_delivery": "2026-05-13",
+      "delivered_at": null,
+      "last_event": "Aktarma merkezinde - İstanbul Anadolu"
+    },
+    {
+      "order_index": 13,
+      "carrier": "aras",
+      "tracking_number": "ARS2026050888888",
+      "status": "delivered",
+      "expected_delivery": "2026-05-06",
+      "delivered_at": "2026-05-05T16:20:00+03:00",
+      "last_event": "Teslim edildi - Kapıda teslim"
+    }
+  ],
+  "stock_movements": [
+    {
+      "product_index": 0,
+      "movement_type": "in",
+      "quantity": "100.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 0,
+      "movement_type": "out",
+      "quantity": "2.000",
+      "reason": "order:1",
+      "order_index": 0
+    },
+    {
+      "product_index": 0,
+      "movement_type": "out",
+      "quantity": "10.000",
+      "reason": "order:2",
+      "order_index": 1
+    },
+    {
+      "product_index": 1,
+      "movement_type": "in",
+      "quantity": "50.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 1,
+      "movement_type": "out",
+      "quantity": "1.000",
+      "reason": "order:3",
+      "order_index": 2
+    },
+    {
+      "product_index": 5,
+      "movement_type": "in",
+      "quantity": "30.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 5,
+      "movement_type": "out",
+      "quantity": "25.000",
+      "reason": "toptan satış",
+      "order_index": null
+    },
+    {
+      "product_index": 11,
+      "movement_type": "in",
+      "quantity": "20.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 11,
+      "movement_type": "out",
+      "quantity": "17.000",
+      "reason": "çeşitli siparişler",
+      "order_index": null
+    },
+    {
+      "product_index": 6,
+      "movement_type": "in",
+      "quantity": "250.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 6,
+      "movement_type": "out",
+      "quantity": "3.000",
+      "reason": "order:1",
+      "order_index": 0
+    },
+    {
+      "product_index": 13,
+      "movement_type": "in",
+      "quantity": "25.000",
+      "reason": "restock",
+      "order_index": null
+    },
+    {
+      "product_index": 13,
+      "movement_type": "out",
+      "quantity": "7.000",
+      "reason": "çeşitli siparişler",
+      "order_index": null
+    },
+    {
+      "product_index": 19,
+      "movement_type": "in",
+      "quantity": "15.000",
+      "reason": "paket hazırlığı",
+      "order_index": null
+    },
+    {
+      "product_index": 19,
+      "movement_type": "out",
+      "quantity": "1.000",
+      "reason": "order:5",
+      "order_index": 4
+    }
+  ],
+  "tasks": [
+    {
+      "title": "ORD-2026-0004 siparişini paketle",
+      "description": "Peynirler soğuk zincir kutusuyla paketlenecek",
+      "task_type": "pack_order",
+      "status": "in_progress",
+      "priority": "high",
+      "assignee_username": "depo-ali",
+      "order_index": 3,
+      "due_at": "2026-05-10T17:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0006 siparişini paketle",
+      "description": null,
+      "task_type": "pack_order",
+      "status": "todo",
+      "priority": "normal",
+      "assignee_username": "depo-ali",
+      "order_index": 5,
+      "due_at": "2026-05-11T12:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0005 kargo gecikmesi takibi",
+      "description": "Aras Kargo ile iletişime geçilecek, gecikme sebebi sorulacak",
+      "task_type": "ship_order",
+      "status": "todo",
+      "priority": "high",
+      "assignee_username": "kargo-ayse",
+      "order_index": 4,
+      "due_at": "2026-05-10T10:00:00+03:00"
+    },
+    {
+      "title": "Dut Pekmezi stok yenileme",
+      "description": "Stok kritik seviyede (5 adet). Malatya tedarikçisine sipariş verilecek.",
+      "task_type": "restock",
+      "status": "todo",
+      "priority": "high",
+      "assignee_username": "satis-fatma",
+      "order_index": null,
+      "due_at": "2026-05-11T09:00:00+03:00"
+    },
+    {
+      "title": "Çeçil Peyniri stok yenileme",
+      "description": "3 adet kaldı, eşik altında. Kars tedarikçisi aranacak.",
+      "task_type": "restock",
+      "status": "todo",
+      "priority": "high",
+      "assignee_username": "satis-fatma",
+      "order_index": null,
+      "due_at": "2026-05-11T09:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0007 onay bekliyor",
+      "description": "Müşteriden ödeme onayı bekleniyor",
+      "task_type": "general",
+      "status": "todo",
+      "priority": "normal",
+      "assignee_username": "muhasebe-hasan",
+      "order_index": 6,
+      "due_at": "2026-05-10T18:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0010 fatura kes",
+      "description": "Kurumsal müşteri, e-fatura kesilecek",
+      "task_type": "general",
+      "status": "todo",
+      "priority": "normal",
+      "assignee_username": "muhasebe-hasan",
+      "order_index": 9,
+      "due_at": "2026-05-11T14:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0012 siparişini paketle",
+      "description": null,
+      "task_type": "pack_order",
+      "status": "todo",
+      "priority": "normal",
+      "assignee_username": "depo-ali",
+      "order_index": 11,
+      "due_at": "2026-05-11T15:00:00+03:00"
+    },
+    {
+      "title": "Haftalık stok sayımı",
+      "description": "Tüm ürünlerin fiziksel sayımı yapılacak",
+      "task_type": "general",
+      "status": "done",
+      "priority": "low",
+      "assignee_username": "depo-ali",
+      "order_index": null,
+      "due_at": "2026-05-09T17:00:00+03:00"
+    },
+    {
+      "title": "ORD-2026-0001 teslim onayı",
+      "description": "Müşteriye teslim edildi, memnuniyet sorulacak",
+      "task_type": "general",
+      "status": "done",
+      "priority": "low",
+      "assignee_username": "satis-fatma",
+      "order_index": 0,
+      "due_at": "2026-05-08T12:00:00+03:00"
+    }
+  ],
+  "notifications": [
+    {
+      "user_username": null,
+      "type": "low_stock",
+      "title": "Düşük Stok: Dut Pekmezi",
+      "message": "Dut Pekmezi 500g stoğu 5 adete düştü (eşik: 10). Yenileme gerekli.",
+      "severity": "critical",
+      "is_read": false,
+      "payload": {
+        "product_sku": "PEK-DUT-500G"
+      }
+    },
+    {
+      "user_username": null,
+      "type": "low_stock",
+      "title": "Düşük Stok: Çeçil Peyniri",
+      "message": "Çeçil Peyniri 300g stoğu 3 adete düştü (eşik: 5). Yenileme gerekli.",
+      "severity": "critical",
+      "is_read": false,
+      "payload": {
+        "product_sku": "PEY-CECIL-300G"
+      }
+    },
+    {
+      "user_username": null,
+      "type": "shipment_delayed",
+      "title": "Kargo Gecikmesi: ORD-2026-0005",
+      "message": "Aras Kargo ARS2026051022222 takip numaralı gönderi gecikti. Beklenen teslim: 09.05.2026.",
+      "severity": "warning",
+      "is_read": false,
+      "payload": {
+        "order_number": "ORD-2026-0005",
+        "tracking_number": "ARS2026051022222"
+      }
+    },
+    {
+      "user_username": "satis-fatma",
+      "type": "order_created",
+      "title": "Yeni Sipariş: ORD-2026-0011",
+      "message": "Selin Yılmaz yeni sipariş oluşturdu. 2 kalem, toplam 2350.00 TL.",
+      "severity": "info",
+      "is_read": false,
+      "payload": {
+        "order_number": "ORD-2026-0011"
+      }
+    },
+    {
+      "user_username": "satis-fatma",
+      "type": "order_created",
+      "title": "Yeni Sipariş: ORD-2026-0007",
+      "message": "Ayşe Korkmaz yeni sipariş oluşturdu. 3 kalem, toplam 1070.00 TL.",
+      "severity": "info",
+      "is_read": true,
+      "payload": {
+        "order_number": "ORD-2026-0007"
+      }
+    },
+    {
+      "user_username": "depo-ali",
+      "type": "task_assigned",
+      "title": "Yeni Görev: ORD-2026-0004 paketle",
+      "message": "Size yeni bir paketleme görevi atandı. Öncelik: Yüksek.",
+      "severity": "info",
+      "is_read": true,
+      "payload": {
+        "order_number": "ORD-2026-0004"
+      }
+    },
+    {
+      "user_username": "kargo-ayse",
+      "type": "task_assigned",
+      "title": "Yeni Görev: Kargo gecikme takibi",
+      "message": "ORD-2026-0005 kargo gecikmesi hakkında Aras Kargo ile iletişime geçin.",
+      "severity": "warning",
+      "is_read": false,
+      "payload": {
+        "order_number": "ORD-2026-0005"
+      }
+    },
+    {
+      "user_username": null,
+      "type": "info",
+      "title": "Haftalık Özet",
+      "message": "Bu hafta 12 sipariş alındı, 2 teslim edildi, 3 kargoda. Toplam ciro: 8,450 TL.",
+      "severity": "info",
+      "is_read": true,
+      "payload": null
+    },
+    {
+      "user_username": "muhasebe-hasan",
+      "type": "agent_action",
+      "title": "AI Asistan: Stok Uyarısı Oluşturuldu",
+      "message": "AI asistan düşük stok tespit etti ve otomatik bildirim oluşturdu.",
+      "severity": "info",
+      "is_read": false,
+      "payload": null
+    },
+    {
+      "user_username": null,
+      "type": "whatsapp_inbound",
+      "title": "Yeni WhatsApp Mesajı",
+      "message": "Zeynep Arslan: '128 numaralı siparişim ne zaman gelir?'",
+      "severity": "info",
+      "is_read": true,
+      "payload": {
+        "customer_whatsapp_id": "905321234567"
+      }
+    }
+  ],
+  "whatsapp_templates": [
+    {
+      "name": "order_shipped",
+      "language": "tr",
+      "category": "utility",
+      "status": "approved",
+      "body": "Merhaba {{1}}, {{2}} numaralı siparişiniz kargoya verildi! 🚚 Takip numaranız: {{3}}. Tahmini teslim: {{4}}.",
+      "variables_schema": {
+        "1": "customer_name",
+        "2": "order_number",
+        "3": "tracking_number",
+        "4": "expected_delivery"
+      }
+    },
+    {
+      "name": "shipment_delayed",
+      "language": "tr",
+      "category": "utility",
+      "status": "approved",
+      "body": "Merhaba {{1}}, {{2}} numaralı siparişinizin teslimatında gecikme yaşanmaktadır. Yeni tahmini teslim tarihi: {{3}}. Özür dileriz. 🙏",
+      "variables_schema": {
+        "1": "customer_name",
+        "2": "order_number",
+        "3": "new_delivery_date"
+      }
+    },
+    {
+      "name": "order_delivered",
+      "language": "tr",
+      "category": "utility",
+      "status": "approved",
+      "body": "Merhaba {{1}}, {{2}} numaralı siparişiniz teslim edildi! ✅ Ürünlerimizi beğendiğinizi umuyoruz. Görüş ve önerileriniz için bize yazabilirsiniz.",
+      "variables_schema": {
+        "1": "customer_name",
+        "2": "order_number"
+      }
+    },
+    {
+      "name": "low_stock_alert",
+      "language": "tr",
+      "category": "utility",
+      "status": "approved",
+      "body": "⚠️ Stok Uyarısı: {{1}} ürününün stoğu {{2}} adete düştü. Yenileme gerekli.",
+      "variables_schema": {
+        "1": "product_name",
+        "2": "current_stock"
+      }
+    },
+    {
+      "name": "welcome_message",
+      "language": "tr",
+      "category": "marketing",
+      "status": "approved",
+      "body": "Hoş geldiniz {{1}}! 🌿 Anadolu Doğal Organik Gıda Kooperatifi'ne ulaştınız. Size nasıl yardımcı olabiliriz?",
+      "variables_schema": {
+        "1": "customer_name"
+      }
+    }
+  ],
+  "agent_conversations": [
+    {
+      "customer_index": 0,
+      "channel": "whatsapp",
+      "external_thread_id": "905321234567",
+      "wa_phone_number_id": "123456789012345",
+      "status": "handled_by_ai",
+      "handled_by_user_username": null,
+      "unread_count": 0,
+      "summary": "Müşteri sipariş durumu sordu, AI yanıtladı."
+    },
+    {
+      "customer_index": 4,
+      "channel": "whatsapp",
+      "external_thread_id": "905441112233",
+      "wa_phone_number_id": "123456789012345",
+      "status": "open",
+      "handled_by_user_username": null,
+      "unread_count": 1,
+      "summary": null
+    },
+    {
+      "customer_index": 6,
+      "channel": "whatsapp",
+      "external_thread_id": "905062223344",
+      "wa_phone_number_id": "123456789012345",
+      "status": "escalated",
+      "handled_by_user_username": "satis-fatma",
+      "unread_count": 2,
+      "summary": "Müşteri özel indirim talep etti, satış ekibine yönlendirildi."
+    }
+  ],
+  "agent_messages": [
+    {
+      "conversation_index": 0,
+      "direction": "inbound",
+      "role": "user",
+      "message_type": "text",
+      "content": "Merhaba, ORD-2026-0001 numaralı siparişim ne zaman gelir?",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MzIxMjM0NTY3FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjEA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 0,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "tool_call",
+      "content": null,
+      "provider": "internal",
+      "provider_message_id": null,
+      "status": "delivered",
+      "tool_name": "get_order_status",
+      "tool_payload": {
+        "args": {
+          "order_number": "ORD-2026-0001"
+        },
+        "result": {
+          "status": "delivered",
+          "tracking": "ARS2026051012345",
+          "carrier": "aras",
+          "delivered_at": "2026-05-07T14:30:00+03:00"
+        }
+      }
+    },
+    {
+      "conversation_index": 0,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "text",
+      "content": "Merhaba Zeynep Hanım! 😊 ORD-2026-0001 numaralı siparişiniz 7 Mayıs'ta teslim edilmiş görünüyor. Aras Kargo ile gönderildi (takip: ARS2026051012345). Elinize ulaşmadıysa lütfen bize bildirin!",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MzIxMjM0NTY3FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjIA",
+      "status": "read"
+    },
+    {
+      "conversation_index": 0,
+      "direction": "inbound",
+      "role": "user",
+      "message_type": "text",
+      "content": "Evet aldım teşekkürler, bal çok güzeldi 🍯",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MzIxMjM0NTY3FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjMA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 0,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "text",
+      "content": "Çok sevindim! 🌿 Beğenmenize çok memnun olduk. Bir sonraki siparişinizde yine buradayız. Afiyet olsun!",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MzIxMjM0NTY3FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjQA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 1,
+      "direction": "inbound",
+      "role": "user",
+      "message_type": "text",
+      "content": "Siparişim ne zaman gelecek? Hediye olarak alıyordum acil lazım",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1NDQxMTEyMjMzFQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjUA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 1,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "tool_call",
+      "content": null,
+      "provider": "internal",
+      "provider_message_id": null,
+      "status": "delivered",
+      "tool_name": "get_order_status",
+      "tool_payload": {
+        "args": {
+          "order_number": "ORD-2026-0005"
+        },
+        "result": {
+          "status": "shipped",
+          "tracking": "ARS2026051022222",
+          "carrier": "aras",
+          "shipment_status": "delayed",
+          "expected_delivery": "2026-05-09"
+        }
+      }
+    },
+    {
+      "conversation_index": 1,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "text",
+      "content": "Merhaba Fatma Hanım, ORD-2026-0005 numaralı siparişiniz kargoda ancak maalesef bir gecikme yaşanıyor. Aras Kargo takip numaranız: ARS2026051022222. Durumu takip ediyoruz ve en kısa sürede teslim edilmesini sağlayacağız. Özür dileriz! 🙏",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1NDQxMTEyMjMzFQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjYA",
+      "status": "sent"
+    },
+    {
+      "conversation_index": 2,
+      "direction": "inbound",
+      "role": "user",
+      "message_type": "text",
+      "content": "Merhaba, toplu alım yapacağım. 5kg fındık ve 3kg bal için özel fiyat var mı?",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MDYyMjIzMzQ0FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjcA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 2,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "text",
+      "content": "Merhaba Ayşe Hanım! Toplu alım için özel fiyat konusunda satış ekibimize yönlendiriyorum. Kısa süre içinde size dönüş yapacaklar. 🌿",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MDYyMjIzMzQ0FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjgA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 2,
+      "direction": "inbound",
+      "role": "user",
+      "message_type": "text",
+      "content": "Tamam bekliyorum, ayrıca kestane balı da var mı stokta?",
+      "provider": "whatsapp",
+      "provider_message_id": "wamid.HBgLOTA1MDYyMjIzMzQ0FQIAEhgUM0VCMDFGQ0I1RUZBNTA1MjYxNjkA",
+      "status": "delivered"
+    },
+    {
+      "conversation_index": 2,
+      "direction": "outbound",
+      "role": "assistant",
+      "message_type": "tool_call",
+      "content": null,
+      "provider": "internal",
+      "provider_message_id": null,
+      "status": "delivered",
+      "tool_name": "check_stock",
+      "tool_payload": {
+        "args": {
+          "query": "kestane balı"
+        },
+        "result": {
+          "sku": "BAL-KESTANE-1KG",
+          "name": "Kestane Balı 1kg",
+          "stock": 32,
+          "unit": "piece"
+        }
+      }
+    }
+  ]
+}

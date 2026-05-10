@@ -235,6 +235,7 @@ class WhatsAppService:
         """
         Calls `GET /{phone_number_id}?fields=display_phone_number,verified_name`
         with the stored access token. Returns a normalized result.
+        Also subscribes the app to WABA webhooks so inbound messages arrive.
         """
         access_token = self._decrypt_access_token(account)
         url = _graph_url(account.api_version, account.phone_number_id)
@@ -255,6 +256,10 @@ class WhatsAppService:
         if resp.status_code == 200:
             data: dict[str, Any] = resp.json()
             await self.mark_credentials_verified(account, error=None)
+
+            # Auto-subscribe app to WABA webhooks
+            await self._subscribe_app_to_waba(account, access_token)
+
             return WhatsAppTestResult(
                 ok=True,
                 detail="Kimlik bilgileri doğrulandı.",
@@ -348,3 +353,41 @@ class WhatsAppService:
             ok=False,
             detail=f"Test mesajı gönderilemedi: {meta_msg}",
         )
+
+    # --------------------------------------------------------- WABA subscription
+
+    async def _subscribe_app_to_waba(
+        self, account: WhatsAppAccount, access_token: str
+    ) -> None:
+        """
+        Subscribe this app to the WABA's webhooks so inbound messages
+        are forwarded to our webhook endpoint. Without this call, Meta
+        only sends test payloads but not real customer messages.
+        """
+        url = _graph_url(
+            account.api_version,
+            f"{account.business_account_id}/subscribed_apps",
+        )
+        headers = {"Authorization": f"Bearer {access_token}"}
+
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                resp = await client.post(url, headers=headers)
+            if resp.status_code == 200:
+                logger.info(
+                    "App subscribed to WABA %s webhooks",
+                    account.business_account_id,
+                )
+            else:
+                logger.warning(
+                    "Failed to subscribe app to WABA %s: %s %s",
+                    account.business_account_id,
+                    resp.status_code,
+                    resp.text[:200],
+                )
+        except httpx.HTTPError as exc:
+            logger.warning(
+                "Network error subscribing to WABA %s: %s",
+                account.business_account_id,
+                exc,
+            )

@@ -270,3 +270,63 @@ async def mark_conversation_read(
         account_id=account.id, conversation_id=conversation_id
     )
     return WhatsAppConversationRead.model_validate(conv)
+
+
+@router.patch(
+    "/conversations/{conversation_id}/ai-toggle",
+    response_model=WhatsAppConversationRead,
+    summary="Enable / disable AI agent for a conversation",
+)
+async def toggle_conversation_ai(
+    conversation_id: int,
+    payload: dict,  # { "ai_enabled": bool }
+    _: CurrentUser,
+    chat: ChatServiceDep,
+    session: DBSession,
+) -> WhatsAppConversationRead:
+    from fastapi import HTTPException
+    from sqlalchemy import select
+    from app.models.whatsapp_chat import WhatsAppConversation
+
+    enabled = bool(payload.get("ai_enabled", False))
+
+    account = await _resolve_account_id(session)
+    if account is None:
+        raise HTTPException(status_code=404, detail="Konuşma bulunamadı.")
+    result = await session.execute(
+        select(WhatsAppConversation).where(
+            WhatsAppConversation.id == conversation_id,
+            WhatsAppConversation.account_id == account.id,
+        )
+    )
+    conv = result.scalar_one_or_none()
+    if conv is None:
+        raise HTTPException(status_code=404, detail="Konuşma bulunamadı.")
+    conv.ai_enabled = enabled
+    session.add(conv)
+    await session.commit()
+    await session.refresh(conv)
+    return WhatsAppConversationRead.model_validate(conv)
+
+
+@router.delete(
+    "/conversations/{conversation_id}",
+    status_code=204,
+    summary="Delete a conversation and all its messages",
+)
+async def delete_conversation(
+    conversation_id: int,
+    _: CurrentUser,
+    chat: ChatServiceDep,
+    session: DBSession,
+):
+    from fastapi import HTTPException
+    from fastapi.responses import Response
+
+    account = await _resolve_account_id(session)
+    if account is None:
+        raise HTTPException(status_code=404, detail="Konuşma bulunamadı.")
+    await chat.delete_conversation(
+        account_id=account.id, conversation_id=conversation_id
+    )
+    return Response(status_code=204)

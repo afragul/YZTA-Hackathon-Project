@@ -36,6 +36,7 @@ class WhatsAppChatMessageRead(BaseModel):
     media_mime_type: str | None
     error_message: str | None
     sent_by_user_id: int | None
+    is_ai_generated: bool = False
     created_at: datetime
     updated_at: datetime
 
@@ -62,6 +63,7 @@ class WhatsAppConversationRead(BaseModel):
     last_message_at: datetime | None
     last_message_direction: MessageDirection | None
     is_pinned: bool
+    ai_enabled: bool = False
     created_at: datetime
     updated_at: datetime
 
