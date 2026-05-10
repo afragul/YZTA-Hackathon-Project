@@ -29,7 +29,7 @@ def upgrade() -> None:
             "ai_enabled",
             sa.Boolean(),
             nullable=False,
-            server_default="false",
+            server_default="true",
         ),
     )
 

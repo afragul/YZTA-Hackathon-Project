@@ -54,14 +54,14 @@ class GetProductDetailsArgs(BaseModel):
 
 def _make_search_products(session: AsyncSession):
     async def _run(query: str) -> str:
-        stmt = (
-            select(Product)
-            .where(
-                Product.is_active.is_(True),
-                Product.name.ilike(f"%{query}%") | Product.sku.ilike(f"%{query}%"),
+        stmt = select(Product).where(Product.is_active.is_(True))
+        if query.strip():
+            stmt = stmt.where(
+                Product.name.ilike(f"%{query}%")
+                | Product.sku.ilike(f"%{query}%")
+                | Product.category.ilike(f"%{query}%")
             )
-            .limit(10)
-        )
+        stmt = stmt.limit(10)
         result = await session.execute(stmt)
         items = result.scalars().all()
         # Filter to in-stock only
@@ -86,7 +86,7 @@ def _make_search_products(session: AsyncSession):
     return StructuredTool.from_function(
         coroutine=_run,
         name="search_products",
-        description="Ürünleri isim veya SKU ile ara. Sadece stokta olanları döner. En fazla 10 sonuç.",
+        description="Ürünleri isim, kategori veya SKU ile ara. Boş query ile çağırırsan tüm aktif ürünleri döner. En fazla 10 sonuç.",
         args_schema=SearchProductsArgs,
     )
 

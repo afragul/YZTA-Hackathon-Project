@@ -206,6 +206,7 @@ class WhatsAppChatService:
             contact_name=contact_name,
             contact_profile_pic_url=contact_profile_pic_url,
             status=ConversationStatus.OPEN,
+            ai_enabled=True,
         )
         self.session.add(conv)
         await self.session.commit()
