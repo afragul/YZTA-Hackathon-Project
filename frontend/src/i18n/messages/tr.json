@@ -61,11 +61,9 @@
   "MENU.SHIPPING.LABELS": "Etiket Üret",
 
   "MENU.MESSAGES": "Mesajlar",
-  "MENU.MESSAGES.INBOX": "Gelen Kutusu",
-  "MENU.MESSAGES.ASSISTANT": "AI Asistan",
-  "MENU.MESSAGES.AUTO_REPLIES": "Otomatik Yanıtlar",
   "MENU.MESSAGES.WHATSAPP": "WhatsApp",
-  "MENU.MESSAGES.EMAIL": "E-posta",
+  "MENU.MESSAGES.FACEBOOK": "Facebook Messages",
+  "MENU.MESSAGES.INSTAGRAM": "Instagram DMs",
 
   "ACCOUNT.PROFILE.TITLE": "Profilim",
   "ACCOUNT.PROFILE.SUBTITLE": "Hesap bilgilerin",

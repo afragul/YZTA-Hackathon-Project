@@ -10,6 +10,7 @@ import { MENU_SIDEBAR } from '@/config/menu.config';
 import { useBodyClass } from '@/hooks/use-body-class';
 import { useMenu } from '@/hooks/use-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { useSettings } from '@/providers/settings-provider';
 import { Button } from '@/components/ui/button';
 import { Footer } from './components/footer';
@@ -24,6 +25,7 @@ export function Demo4Layout() {
   const { setOption } = useSettings();
   const isMobileMode = useIsMobile();
   const intl = useIntl();
+  const isChatRoute = pathname.startsWith('/messages/');
   const sectionTitle = item?.title
     ? intl.formatMessage({ id: item.title, defaultMessage: item.title })
     : '';
@@ -54,50 +56,64 @@ export function Demo4Layout() {
         <div className="flex flex-col lg:flex-row grow pt-(--header-height) lg:pt-0">
           {!isMobileMode && <Sidebar />}
 
-          <div className="flex grow rounded-xl bg-background border border-input lg:ms-(--sidebar-width) mt-0 lg:mt-5 m-5">
-            <div className="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] pt-5">
-              <main className="grow" role="content">
-                <Toolbar>
-                  <ToolbarHeading />
+          <div
+            className={cn(
+              'flex grow rounded-xl bg-background border border-input lg:ms-(--sidebar-width) mt-0 lg:mt-5 m-5',
+              isChatRoute && 'overflow-hidden min-h-0',
+            )}
+          >
+            <div
+              className={cn(
+                'flex flex-col grow lg:[--kt-scrollbar-width:auto]',
+                isChatRoute
+                  ? 'overflow-hidden min-h-0'
+                  : 'kt-scrollable-y-auto pt-5',
+              )}
+            >
+              <main className="grow flex flex-col min-h-0" role="content">
+                {!isChatRoute && (
+                  <Toolbar>
+                    <ToolbarHeading />
 
-                  <ToolbarActions>
-                    <>
-                      {pathname.startsWith('/store-client') ? (
-                        <StoreClientTopbar />
-                      ) : (
-                        <>
-                          <SearchDialog
-                            trigger={
-                              <Button
-                                variant="ghost"
-                                mode="icon"
-                                className="hover:bg-primary/10 hover:[&_svg]:text-primary"
-                              >
-                                <Search className="size-4.5!" />
-                              </Button>
-                            }
-                          />
-                          <NotificationsSheet
-                            trigger={
-                              <Button
-                                variant="ghost"
-                                mode="icon"
-                                className="hover:bg-primary/10 hover:[&_svg]:text-primary"
-                              >
-                                <MessageSquareDot className="size-4.5!" />
-                              </Button>
-                            }
-                          />
-                        </>
-                      )}
-                    </>
-                  </ToolbarActions>
-                </Toolbar>
+                    <ToolbarActions>
+                      <>
+                        {pathname.startsWith('/store-client') ? (
+                          <StoreClientTopbar />
+                        ) : (
+                          <>
+                            <SearchDialog
+                              trigger={
+                                <Button
+                                  variant="ghost"
+                                  mode="icon"
+                                  className="hover:bg-primary/10 hover:[&_svg]:text-primary"
+                                >
+                                  <Search className="size-4.5!" />
+                                </Button>
+                              }
+                            />
+                            <NotificationsSheet
+                              trigger={
+                                <Button
+                                  variant="ghost"
+                                  mode="icon"
+                                  className="hover:bg-primary/10 hover:[&_svg]:text-primary"
+                                >
+                                  <MessageSquareDot className="size-4.5!" />
+                                </Button>
+                              }
+                            />
+                          </>
+                        )}
+                      </>
+                    </ToolbarActions>
+                  </Toolbar>
+                )}
 
                 <Outlet />
               </main>
 
-              <Footer />
+              {!isChatRoute && <Footer />}
             </div>
           </div>
         </div>

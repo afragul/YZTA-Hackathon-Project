@@ -48,9 +48,11 @@ import {
   Theater,
   ThumbsUp,
   TrendingUp,
+  Truck,
   UserCheck,
   UserCircle,
   Users,
+  Warehouse,
   Briefcase as WorkIcon,
   Zap,
 } from 'lucide-react';
@@ -83,7 +85,7 @@ export const MENU_SIDEBAR: MenuConfig = [
   { heading: 'MENU.HEADING.OPERATIONS' },
   {
     title: 'MENU.INVENTORY',
-    icon: Layout,
+    icon: Warehouse,
     children: [
       { title: 'MENU.INVENTORY.LIST', path: '/inventory' },
       { title: 'MENU.INVENTORY.ALERTS', path: '/inventory/alerts' },
@@ -120,7 +122,7 @@ export const MENU_SIDEBAR: MenuConfig = [
   },
   {
     title: 'MENU.SHIPPING',
-    icon: Plug,
+    icon: Truck,
     children: [
       { title: 'MENU.SHIPPING.ACTIVE', path: '/shipping' },
       { title: 'MENU.SHIPPING.DELAYS', path: '/shipping/delays' },
@@ -133,11 +135,9 @@ export const MENU_SIDEBAR: MenuConfig = [
     title: 'MENU.MESSAGES',
     icon: MessageSquare,
     children: [
-      { title: 'MENU.MESSAGES.INBOX', path: '/messages/inbox' },
-      { title: 'MENU.MESSAGES.ASSISTANT', path: '/messages/assistant' },
-      { title: 'MENU.MESSAGES.AUTO_REPLIES', path: '/messages/auto-replies' },
       { title: 'MENU.MESSAGES.WHATSAPP', path: '/messages/whatsapp' },
-      { title: 'MENU.MESSAGES.EMAIL', path: '/messages/email' },
+      { title: 'MENU.MESSAGES.FACEBOOK', disabled: true },
+      { title: 'MENU.MESSAGES.INSTAGRAM', disabled: true },
     ],
   },
 ];

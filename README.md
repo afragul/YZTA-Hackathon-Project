@@ -105,6 +105,15 @@ API prefix: `/api/v1`
 | GET    | `/users/me`         | bearer    | Mevcut kullanıcı bilgisi                        |
 | PATCH  | `/users/me`         | bearer    | `full_name`, `avatar_key` güncelle              |
 | POST   | `/uploads/presigned`| bearer    | S3 POST policy üret (avatars/products/misc)     |
+| GET    | `/integrations/whatsapp` | bearer | Bağlı WhatsApp hesabını oku                  |
+| POST   | `/integrations/whatsapp` | admin  | WhatsApp Cloud API hesabı bağla              |
+| GET/POST | `/integrations/whatsapp/webhook` | — | Meta webhook (verify + receiver)        |
+| GET    | `/whatsapp/chat/conversations` | bearer | Sohbet listesi (filter, search, paginated) |
+| POST   | `/whatsapp/chat/conversations` | bearer | Yeni sohbet başlat (telefon + mesaj)     |
+| GET    | `/whatsapp/chat/conversations/{id}/messages` | bearer | Konuşmadaki mesajlar          |
+| POST   | `/whatsapp/chat/conversations/{id}/messages` | bearer | Mesaj gönder (Cloud API)       |
+| PATCH  | `/whatsapp/chat/conversations/{id}/status` | bearer | Sohbet durumu (open/pending/closed/spam) |
+| PATCH  | `/whatsapp/chat/conversations/{id}/read` | bearer | Okundu işaretle                    |
 
 Hızlı login testi:
 

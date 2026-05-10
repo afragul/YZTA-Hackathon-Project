@@ -41,6 +41,18 @@ class Settings(BaseSettings):
     FIRST_USER_EMAIL: str = "user@yzta.dev"
     FIRST_USER_PASSWORD: str = "Yzta123!"
 
+    # WhatsApp Cloud API
+    WHATSAPP_GRAPH_BASE_URL: str = "https://graph.facebook.com"
+    WHATSAPP_DEFAULT_API_VERSION: str = "v21.0"
+    WHATSAPP_ENCRYPTION_KEY: str = ""  # url-safe b64, 32 bytes; empty = derive from SECRET_KEY
+    WHATSAPP_PUBLIC_WEBHOOK_BASE: str = "http://localhost:8000"  # used for displaying webhook URL in UI
+
+    # AI Providers
+    AI_DEFAULT_PROVIDER: str = "google"
+    AI_DEFAULT_MODEL: str = "gemini-2.5-flash"
+    AI_DEFAULT_MAX_TOKENS: int = 2048
+    GOOGLE_GENAI_BASE_URL: str = "https://generativelanguage.googleapis.com"
+
     @computed_field
     @property
     def cors_origins(self) -> List[str]:

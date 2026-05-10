@@ -73,7 +73,7 @@ const menuItems: MenuItem[] = [
   {
     icon: MessageSquare,
     tooltipId: 'MENU.MESSAGES',
-    path: '/messages/inbox',
+    path: '/messages/whatsapp',
     rootPath: '/messages/',
   },
 ];

@@ -15,6 +15,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     strictPort: true,
+    allowedHosts: ['kobaitec.com.tr', 'www.kobaitec.com.tr'],
     watch: {
       usePolling: true,
     },

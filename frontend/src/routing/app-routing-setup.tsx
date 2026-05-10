@@ -3,7 +3,7 @@ import { RequireAuth } from '@/auth/require-auth';
 import { ErrorRouting } from '@/errors/error-routing';
 import { Demo4Layout } from '@/layouts/demo4/layout';
 import { ProfilePage } from '@/pages/kobai/account/profile-page';
-import { DashboardPage } from '@/pages/kobai/dashboard/dashboard-page';
+import { DashboardPage as KobaiDashboardPage } from '@/pages/kobai/dashboard/dashboard-page';
 import { ApiKeysPage } from '@/pages/kobai/settings/api-keys-page';
 import { AppearanceSettingsPage } from '@/pages/kobai/settings/appearance-settings-page';
 import { GeneralSettingsPage } from '@/pages/kobai/settings/general-settings-page';
@@ -89,6 +89,7 @@ import {
   AllProductsPage,
   DashboardPage as StoreAdminDashboardPage,
 } from '@/pages/store-admin';
+import { InboxPage, WhatsAppMessagesPage } from '@/pages/messages';
 import {
   MyOrdersPage,
   OrderPlacedPage,
@@ -109,7 +110,7 @@ export function AppRoutingSetup() {
     <Routes>
       <Route element={<RequireAuth />}>
         <Route element={<Demo4Layout />}>
-          <Route path="/" element={<DashboardPage />} />
+          <Route path="/" element={<KobaiDashboardPage />} />
           <Route path="/account/profile" element={<ProfilePage />} />
           <Route path="/settings/general" element={<GeneralSettingsPage />} />
           <Route
@@ -401,6 +402,9 @@ export function AppRoutingSetup() {
             path="/store-admin/inventory/all-products"
             element={<AllProductsPage />}
           />
+          <Route path="/messages" element={<InboxPage />} />
+          <Route path="/messages/inbox" element={<InboxPage />} />
+          <Route path="/messages/whatsapp" element={<WhatsAppMessagesPage />} />
           <Route path="/auth/get-started" element={<AccountGetStartedPage />} />
         </Route>
       </Route>

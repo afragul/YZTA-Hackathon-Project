@@ -2,8 +2,10 @@ node_modules
 dist
 .vite
 .env
-.env.*
+.env.local
+.env.development
 !.env.example
+!.env.production
 .git
 .gitignore
 .vscode

@@ -1,17 +1,20 @@
-FROM node:20-bookworm-slim
-
-ENV NODE_ENV=development \
-    CI=true \
-    NPM_CONFIG_FUND=false \
-    NPM_CONFIG_AUDIT=false
+# Stage 1: Build
+FROM node:20-bookworm-slim AS builder
 
 WORKDIR /app
 
 COPY package.json package-lock.json* .npmrc ./
-RUN npm install --no-audit --no-fund
+RUN npm ci --no-audit --no-fund
 
 COPY . .
+RUN npm run build
 
-EXPOSE 5173
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
 
-CMD ["npm", "run", "dev"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
