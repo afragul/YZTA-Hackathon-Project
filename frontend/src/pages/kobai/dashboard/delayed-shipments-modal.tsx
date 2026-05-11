@@ -304,8 +304,7 @@ export function DelayedShipmentsModal({ open, onOpenChange }: Props) {
                 <Textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Siparişinizin kargosunda bir gecikme yaşanmaktadır..."
-                  rows={3}
+                  rows={4}
                 />
               </div>
             </div>

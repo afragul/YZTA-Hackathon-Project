@@ -63,7 +63,7 @@ export function AssistantWidget() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 size-40 rounded-full bg-transparent flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+          className="fixed bottom-16 right-6 z-50 size-40 rounded-full bg-transparent flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
           title="Akıllı Asistan"
         >
           <img
