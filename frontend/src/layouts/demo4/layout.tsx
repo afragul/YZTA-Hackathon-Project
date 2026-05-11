@@ -17,6 +17,7 @@ import { Footer } from './components/footer';
 import { Header } from './components/header';
 import { Sidebar } from './components/sidebar';
 import { Toolbar, ToolbarActions, ToolbarHeading } from './components/toolbar';
+import { AssistantWidget } from '@/partials/assistant/assistant-widget';
 
 export function Demo4Layout() {
   const { pathname } = useLocation();
@@ -107,6 +108,7 @@ export function Demo4Layout() {
           </div>
         </div>
       </div>
+      <AssistantWidget />
     </>
   );
 }

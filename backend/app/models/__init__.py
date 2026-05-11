@@ -10,6 +10,7 @@ from app.models.agent import (
     MessageType,
 )
 from app.models.ai_provider import AiProvider, AiProviderCode, AiProviderStatus
+from app.models.email_provider import EmailProvider, EmailProviderCode, EmailProviderStatus
 from app.models.ai_agent_prompt import AiAgentPrompt
 from app.models.customer import Customer
 from app.models.notification import Notification, NotificationSeverity, NotificationType
@@ -58,6 +59,10 @@ __all__ = [
     "AiProviderCode",
     "AiProviderStatus",
     "AiAgentPrompt",
+    # Email Provider
+    "EmailProvider",
+    "EmailProviderCode",
+    "EmailProviderStatus",
     # Customer
     "Customer",
     # Notification
