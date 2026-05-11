@@ -178,19 +178,19 @@ export function OrdersPage() {
       <Container>
         <Card>
           <DataGrid table={table} recordCount={items.length} isLoading={isLoading}>
-            <CardHeader className="py-3.5 flex-wrap gap-2">
-              <div className="flex items-center gap-2">
-                <Search className="size-4 text-muted-foreground" />
+            <CardHeader className="py-3.5 flex flex-col sm:flex-row flex-wrap gap-3 sm:items-center">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Search className="size-4 text-muted-foreground shrink-0" />
                 <Input
                   placeholder={intl.formatMessage({ id: 'ORDERS.SEARCH' })}
                   value={globalFilter}
                   onChange={(e) => setGlobalFilter(e.target.value)}
-                  className="h-8 w-40 lg:w-60"
+                  className="h-8 w-full sm:w-40 lg:w-60"
                 />
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="h-8 w-40">
+                  <SelectTrigger className="h-8 w-full sm:w-40">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>

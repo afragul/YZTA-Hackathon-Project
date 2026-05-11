@@ -148,6 +148,7 @@ export function SignInPage() {
                 <Input
                   placeholder={usernamePlaceholder}
                   autoComplete="username"
+                  className="text-[16px] md:text-sm"
                   {...field}
                 />
               </FormControl>
@@ -174,6 +175,7 @@ export function SignInPage() {
                   placeholder={passwordPlaceholder}
                   type={passwordVisible ? 'text' : 'password'}
                   autoComplete="current-password"
+                  className="text-[16px] md:text-sm pr-10"
                   {...field}
                 />
                 <Button
