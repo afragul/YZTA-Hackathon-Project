@@ -13,6 +13,7 @@ import {
   Wallet,
 } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
+import { useState } from 'react';
 import { Container } from '@/components/common/container';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -22,6 +23,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { apiRequest } from '@/lib/api-client';
+import { DelayedShipmentsModal } from './delayed-shipments-modal';
 
 interface DashboardStats {
   kpi: {
@@ -78,6 +80,8 @@ export function DashboardPage() {
     staleTime: 30_000,
   });
 
+  const [delayedModalOpen, setDelayedModalOpen] = useState(false);
+
   if (isLoading || !data) {
     return (
       <Container className="flex items-center justify-center py-20">
@@ -89,6 +93,7 @@ export function DashboardPage() {
   const { kpi, shipments, tasks, unread_notifications, top_products, low_stock } = data;
 
   return (
+    <>
     <Container className="space-y-5 pb-8">
       {/* Header */}
       <div className="flex flex-col gap-1">
@@ -147,6 +152,7 @@ export function DashboardPage() {
           label="Geciken Kargolar"
           value={shipments.delayed}
           variant="destructive"
+          onClick={() => setDelayedModalOpen(true)}
         />
         <StatusCard
           icon={<Bell className="size-4" />}
@@ -312,6 +318,12 @@ export function DashboardPage() {
         </Card>
       </div>
     </Container>
+
+      <DelayedShipmentsModal
+        open={delayedModalOpen}
+        onOpenChange={setDelayedModalOpen}
+      />
+    </>
   );
 }
 
@@ -346,15 +358,20 @@ function StatusCard({
   label,
   value,
   variant,
+  onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   value: number;
   variant: 'warning' | 'info' | 'destructive' | 'secondary';
+  onClick?: () => void;
 }) {
   return (
-    <Card>
-      <CardContent className="flex items-center justify-between p-4">
+    <Card className={onClick ? 'cursor-pointer hover:border-primary/40 transition-colors' : ''}>
+      <CardContent
+        className="flex items-center justify-between p-4"
+        onClick={onClick}
+      >
         <div className="flex items-center gap-3">
           <span className="text-muted-foreground">{icon}</span>
           <span className="text-sm">{label}</span>

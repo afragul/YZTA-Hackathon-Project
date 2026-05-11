@@ -6,7 +6,7 @@ import { ChatSheet } from '@/partials/topbar/chat-sheet';
 import { NotificationsSheet } from '@/partials/topbar/notifications-sheet';
 import { UserDropdownMenu } from '@/partials/topbar/user-dropdown-menu';
 import {
-  Bell,
+  BellRing,
   LayoutGrid,
   Menu,
   MessageCircleMore,
@@ -149,7 +149,7 @@ export function Header() {
                     shape="circle"
                     className="size-9 hover:bg-primary/10 hover:[&_svg]:text-primary"
                   >
-                    <Bell className="size-4.5!" />
+                    <BellRing className="size-4.5!" />
                   </Button>
                 }
               />

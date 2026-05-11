@@ -69,6 +69,7 @@ export function NotificationsSheet({ trigger }: { trigger: ReactNode }) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const fetchNotifications = useCallback(async () => {
     setLoading(true);
@@ -77,6 +78,7 @@ export function NotificationsSheet({ trigger }: { trigger: ReactNode }) {
         '/notifications?skip=0&limit=30&unread_only=false',
       );
       setNotifications(data);
+      setUnreadCount(data.filter((n) => !n.is_read).length);
     } catch {
       // silently fail
     } finally {
@@ -84,13 +86,16 @@ export function NotificationsSheet({ trigger }: { trigger: ReactNode }) {
     }
   }, []);
 
+  // Fetch unread count on mount (for badge on trigger)
+  useEffect(() => {
+    void fetchNotifications();
+  }, [fetchNotifications]);
+
   useEffect(() => {
     if (open) {
       void fetchNotifications();
     }
   }, [open, fetchNotifications]);
-
-  const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   const handleMarkAllRead = async () => {
     try {
@@ -100,6 +105,7 @@ export function NotificationsSheet({ trigger }: { trigger: ReactNode }) {
       setNotifications((prev) =>
         prev.map((n) => ({ ...n, is_read: true })),
       );
+      setUnreadCount(0);
     } catch {
       // silently fail
     }
@@ -113,6 +119,7 @@ export function NotificationsSheet({ trigger }: { trigger: ReactNode }) {
       setNotifications((prev) =>
         prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)),
       );
+      setUnreadCount((c) => Math.max(0, c - 1));
     } catch {
       // silently fail
     }
