@@ -8,6 +8,7 @@ from app.api.deps import CurrentUser, DBSession
 from app.schemas.product import ProductCreate, ProductRead, ProductUpdate
 from app.schemas.stock_movement import StockMovementCreate, StockMovementRead
 from app.services.product_service import ProductService
+from app.services.analytics_agent_service import AnalyticsAgentService
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -50,6 +51,99 @@ async def get_low_stock_products(
 ) -> list[ProductRead]:
     products = await service.get_low_stock_products()
     return [ProductRead.model_validate(p) for p in products]
+
+@router.get(
+    "/ai-stock-suggestions",
+    summary="Get AI stock order suggestions for low stock products",
+)
+async def get_ai_stock_suggestions(
+    _: CurrentUser,
+    service: ProductServiceDep,
+    session: DBSession,
+) -> list[dict]:
+    products = await service.get_low_stock_products()
+    analytics_agent = AnalyticsAgentService(session)
+
+    demo_sales_data = {
+        "PEK-DUT-500G": {
+            "daily_average_sales": 5,
+            "lead_time_days": 2,
+            "supplier_name": "Anadolu Doğal Tedarik",
+            "supplier_email": "tedarik@anadoludogal.com",
+        },
+        "PEY-CECIL-300G": {
+            "daily_average_sales": 4,
+            "lead_time_days": 3,
+            "supplier_name": "Kars Yöresel Ürünler",
+            "supplier_email": "siparis@karsyoresel.com",
+        },
+    }
+
+    suggestions = []
+
+    for product in products:
+        stock = float(product.stock or 0)
+        low_stock_threshold = float(product.low_stock_threshold or 0)
+
+        defaults = {
+            "daily_average_sales": max(1, round(low_stock_threshold / 2)),
+            "lead_time_days": 2,
+            "supplier_name": "Varsayılan Tedarikçi",
+            "supplier_email": "tedarikci@example.com",
+        }
+
+        analytics_data = demo_sales_data.get(product.sku, defaults)
+
+        daily_average_sales = analytics_data["daily_average_sales"]
+        lead_time_days = analytics_data["lead_time_days"]
+
+        suggested_order_quantity = (
+            daily_average_sales * 7
+        ) + (
+            daily_average_sales * lead_time_days
+        )
+
+        days_until_out_of_stock = (
+            round(stock / daily_average_sales)
+            if daily_average_sales > 0
+            else 0
+        )
+
+        agent_payload = {
+            "product_name": product.name,
+            "sku": product.sku,
+            "current_stock": int(stock),
+            "daily_average_sales": daily_average_sales,
+            "lead_time_days": lead_time_days,
+            "days_until_out_of_stock": days_until_out_of_stock,
+            "suggested_order_quantity": suggested_order_quantity,
+            "supplier_name": analytics_data["supplier_name"],
+            "supplier_email": analytics_data["supplier_email"],
+        }
+
+        ai_result = await analytics_agent.generate_stock_suggestion_texts(agent_payload)
+
+        suggestions.append(
+            {
+                "product_id": product.id,
+                "sku": product.sku,
+                "product_name": product.name,
+                "category": product.category,
+                "current_stock": int(stock),
+                "low_stock_threshold": int(low_stock_threshold),
+                "daily_average_sales": daily_average_sales,
+                "lead_time_days": lead_time_days,
+                "days_until_out_of_stock": days_until_out_of_stock,
+                "suggested_order_quantity": suggested_order_quantity,
+                "supplier_name": analytics_data["supplier_name"],
+                "supplier_email": analytics_data["supplier_email"],
+                "ai_message": ai_result["ai_message"],
+                "mail_subject": ai_result["mail_subject"],
+                "mail_draft": ai_result["mail_draft"],
+            }
+        )
+
+    return suggestions
 
 
 @router.get(

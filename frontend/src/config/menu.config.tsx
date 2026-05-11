@@ -107,6 +107,7 @@ export const MENU_SIDEBAR: MenuConfig = [
     children: [
       { title: 'MENU.INVENTORY.MOVEMENTS', path: '/inventory/movements' },
       { title: 'MENU.INVENTORY.LOW_STOCK', path: '/inventory/low-stock' },
+      { title: 'MENU.INVENTORY.AI_SUGGESTIONS', path: '/inventory/ai-suggestions' },
     ],
   },
   {
