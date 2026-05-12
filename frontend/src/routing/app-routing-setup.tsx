@@ -6,6 +6,7 @@ import { ProfilePage } from '@/pages/kobai/account/profile-page';
 import { CustomersPage } from '@/pages/kobai/customers/customers-page';
 import { DashboardPage as KobaiDashboardPage } from '@/pages/kobai/dashboard/dashboard-page';
 import { LowStockPage } from '@/pages/kobai/inventory/low-stock-page';
+import { AiStockSuggestionsPage } from '@/pages/kobai/inventory/ai-stock-suggestions-page';
 import { StockMovementsPage } from '@/pages/kobai/inventory/stock-movements-page';
 import { NotificationsPage } from '@/pages/kobai/notifications/notifications-page';
 import { OrdersPage } from '@/pages/kobai/orders/orders-page';
@@ -139,6 +140,7 @@ export function AppRoutingSetup() {
           <Route path="/shipping" element={<ShipmentsPage />} />
           <Route path="/inventory/movements" element={<StockMovementsPage />} />
           <Route path="/inventory/low-stock" element={<LowStockPage />} />
+          <Route path="/inventory/ai-suggestions" element={<AiStockSuggestionsPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/dark-sidebar" element={<Demo1DarkSidebarPage />} />
