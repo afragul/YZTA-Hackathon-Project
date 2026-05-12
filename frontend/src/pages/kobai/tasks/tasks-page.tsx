@@ -8,7 +8,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Search } from 'lucide-react';
+import { Search, Sparkles, Loader2 } from 'lucide-react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Container } from '@/components/common/container';
 import { Badge } from '@/components/ui/badge';
@@ -18,6 +18,8 @@ import { DataGridColumnHeader } from '@/components/ui/data-grid-column-header';
 import { DataGridPagination } from '@/components/ui/data-grid-pagination';
 import { DataGridTable } from '@/components/ui/data-grid-table';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { apiRequest } from '@/lib/api-client';
 import { PageHeader } from '../components/page-header';
@@ -52,11 +54,61 @@ const PRIORITY_VARIANT: Record<TaskPriority, 'secondary' | 'warning' | 'destruct
   high: 'destructive',
 };
 
+const AiWorkflowTrigger = ({ onComplete }: { onComplete: () => void }) => {
+  const [loading, setLoading] = useState(false);
+
+  const runWorkflow = async () => {
+    setLoading(true);
+    try {
+      // Backend'deki endpointine istek atıyoruz
+      const response = await apiRequest('/tasks/run-ai-workflow', {
+        method: 'POST',
+      });
+      toast.success("AI Operasyonu Tamamlandı!");
+      onComplete(); // Başarılı olunca listeyi yenilemek için
+    } catch (error) {
+      toast.error("AI çalışırken bir hata oluştu.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-4 p-4 bg-primary/5 border border-primary/20 rounded-xl mb-6">
+      <div className="flex flex-col flex-1">
+        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-primary" />
+          Otonom İş Akışı Yönetimi
+        </h3>
+        <p className="text-xs text-gray-600 mt-1">
+          Bekleyen tüm siparişleri analiz edip ekiplere otomatik iş dağıtmak ister misiniz?
+        </p>
+      </div>
+      <Button
+        onClick={runWorkflow}
+        disabled={loading}
+        className="bg-primary hover:bg-primary/90 text-white"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            AI Düşünüyor...
+          </>
+        ) : (
+          " Operasyonu Başlat"
+        )}
+      </Button>
+    </div>
+  );
+};
+
+
 export function TasksPage() {
   const intl = useIntl();
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['tasks'],
     queryFn: () => apiRequest<Task[]>('/tasks?skip=0&limit=50'),
     staleTime: 30_000,
@@ -171,6 +223,7 @@ export function TasksPage() {
       />
 
       <Container>
+        <AiWorkflowTrigger onComplete={() => refetch()} />
         <Card>
           <DataGrid table={table} recordCount={items.length} isLoading={isLoading}>
             <CardHeader className="py-3.5 flex flex-col sm:flex-row flex-wrap gap-3 sm:items-center">
