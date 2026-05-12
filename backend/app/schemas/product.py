@@ -43,3 +43,23 @@ class ProductRead(ProductBase):
     stock: Decimal
     created_at: datetime
     updated_at: datetime
+
+
+class ProductDataCheckFaq(BaseModel):
+    question: str
+    data_status: str
+    needs_business_action: bool = False
+    action_note: str | None = None
+
+
+class ProductDataCheckResult(BaseModel):
+    product_id: int
+    sku: str
+    name: str
+    summary: str
+    strengths: list[str] = Field(default_factory=list)
+    missing_info: list[str] = Field(default_factory=list)
+    faq: list[ProductDataCheckFaq] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
+    search_intents: list[str] = Field(default_factory=list)
+    source: str = "ai"

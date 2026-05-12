@@ -5,8 +5,14 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.api.deps import CurrentUser, DBSession
-from app.schemas.product import ProductCreate, ProductRead, ProductUpdate
+from app.schemas.product import (
+    ProductCreate,
+    ProductDataCheckResult,
+    ProductRead,
+    ProductUpdate,
+)
 from app.schemas.stock_movement import StockMovementCreate, StockMovementRead
+from app.services.product_data_check_service import ProductDataCheckService
 from app.services.product_service import ProductService
 
 router = APIRouter(prefix="/products", tags=["products"])
@@ -17,6 +23,15 @@ def get_product_service(session: DBSession) -> ProductService:
 
 
 ProductServiceDep = Annotated[ProductService, Depends(get_product_service)]
+
+
+def get_product_data_check_service(session: DBSession) -> ProductDataCheckService:
+    return ProductDataCheckService(session)
+
+
+ProductDataCheckServiceDep = Annotated[
+    ProductDataCheckService, Depends(get_product_data_check_service)
+]
 
 
 @router.get(
@@ -66,6 +81,23 @@ async def get_product(
     if product is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
     return ProductRead.model_validate(product)
+
+
+@router.post(
+    "/{product_id}/ai-data-check",
+    response_model=ProductDataCheckResult,
+    summary="Analyze product data readiness with AI",
+)
+async def analyze_product_data_readiness(
+    product_id: int,
+    _: CurrentUser,
+    service: ProductServiceDep,
+    checker: ProductDataCheckServiceDep,
+) -> ProductDataCheckResult:
+    product = await service.get_by_id(product_id)
+    if product is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    return await checker.analyze(product)
 
 
 @router.post(

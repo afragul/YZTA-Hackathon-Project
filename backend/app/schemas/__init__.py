@@ -10,7 +10,13 @@ from app.schemas.auth import AccessToken, RefreshRequest, TokenPair
 from app.schemas.customer import CustomerCreate, CustomerRead, CustomerUpdate
 from app.schemas.notification import NotificationCreate, NotificationRead
 from app.schemas.order import OrderCreate, OrderItemCreate, OrderItemRead, OrderRead, OrderUpdate
-from app.schemas.product import ProductCreate, ProductRead, ProductUpdate
+from app.schemas.product import (
+    ProductCreate,
+    ProductDataCheckFaq,
+    ProductDataCheckResult,
+    ProductRead,
+    ProductUpdate,
+)
 from app.schemas.shipment import ShipmentCreate, ShipmentRead, ShipmentUpdate
 from app.schemas.stock_movement import StockMovementCreate, StockMovementRead
 from app.schemas.task import TaskCreate, TaskRead, TaskUpdate
@@ -47,6 +53,8 @@ __all__ = [
     "OrderUpdate",
     # Product
     "ProductCreate",
+    "ProductDataCheckFaq",
+    "ProductDataCheckResult",
     "ProductRead",
     "ProductUpdate",
     "RefreshRequest",
