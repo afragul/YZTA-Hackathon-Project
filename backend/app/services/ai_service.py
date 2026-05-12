@@ -277,7 +277,12 @@ class AiService:
 
     # ---------------------------------------------------------------- factory
 
-    async def get_chat_model(self, provider_row: AiProvider | None = None) -> Any:
+    async def get_chat_model(
+        self,
+        provider_row: AiProvider | None = None,
+        *,
+        temperature: float | None = None,
+    ) -> Any:
         """
         Return a configured LangChain BaseChatModel for the active provider.
 
@@ -295,11 +300,14 @@ class AiService:
         if row.provider == AiProviderCode.GOOGLE:
             from langchain_google_genai import ChatGoogleGenerativeAI
 
-            return ChatGoogleGenerativeAI(
-                api_key=api_key,
-                model=row.model,
-                max_output_tokens=row.max_tokens,
-            )
+            kwargs: dict[str, Any] = {
+                "api_key": api_key,
+                "model": row.model,
+                "max_output_tokens": row.max_tokens,
+            }
+            if temperature is not None:
+                kwargs["temperature"] = temperature
+            return ChatGoogleGenerativeAI(**kwargs)
 
         raise HTTPException(
             status_code=status.HTTP_501_NOT_IMPLEMENTED,
