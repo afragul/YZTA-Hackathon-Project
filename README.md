@@ -1,14 +1,13 @@
-# KobAI — KOBİ / Kooperatif AI Asistanı
+# KobAI — KOBİ AI Asistanı 
 
-Organik gıda kooperatifi için **WhatsApp üzerinden müşteri iletişimi**, **sipariş & kargo takibi**, **stok yönetimi** ve **LangGraph tabanlı çoklu AI ajanı** ile uçtan uca otomasyon paneli.
+AI destekli kobi otomasyon ve erp platformu.  
+Sistem; **WhatsApp müşteri iletişimi**, **sipariş & kargo yönetimi**, **stok takibi**, **otonom iş akışları** ve **LangGraph tabanlı çoklu AI ajanları** ile operasyon süreçlerini uçtan uca dijitalleştirir.
 
-> **Demo:** https://kobaitec.com.tr  
-> **Senaryo:** Anadolu Doğal Organik Gıda Kooperatifi  
-> **Repo:** https://github.com/afragul/YZTA-Hackathon-Project
+> 🚀 **Live Demo:** https://kobaitec.com.tr  
+> Demo ortamı üzerinden platformu test edebilir ve gerçek kullanıcı senaryolarını deneyebilirsiniz.
 
-<p align="center">
-  <img src="docs/images/banner.png" alt="KobAI banner" width="820" />
-</p>
+> 🥗 **Use Case:** Anadolu Doğal Organik Gıda Kooperatifi  
+> 🔗 **GitHub Repo:** https://github.com/afragul/YZTA-Hackathon-Project
 
 ---
 
